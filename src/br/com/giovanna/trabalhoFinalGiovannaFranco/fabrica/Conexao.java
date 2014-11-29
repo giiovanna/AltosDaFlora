@@ -1,6 +1,7 @@
 package br.com.giovanna.trabalhoFinalGiovannaFranco.fabrica;
 
 import java.sql.*;
+import javax.swing.JOptionPane;
 
 public class Conexao {
     
@@ -16,6 +17,8 @@ public class Conexao {
             return con;
              
         }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Não foi possível realizar a conexão com o banco de dados! =>" + e.getMessage(),
+                    "Erro", JOptionPane.ERROR_MESSAGE);
             throw new RuntimeException("[ERRO!] Não foi possível fazer a conexão com o banco de dados.", e);
         }
     }
