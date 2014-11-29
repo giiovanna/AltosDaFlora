@@ -1,21 +1,19 @@
 package br.com.giovanna.trabalhoFinalGiovannaFranco.apresentacao;
 
-import br.com.giovanna.trabalhoFinalGiovannaFranco.controle.FuncionarioDAO;
-import br.com.giovanna.trabalhoFinalGiovannaFranco.modelo.Funcionario;
+import br.com.giovanna.trabalhoFinalGiovannaFranco.modelo.Acompanhante;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
-public class FormInsercaoFuncionario extends javax.swing.JFrame {
-    private FormFuncionario ff;
-    private Funcionario funcionario;
+public class FormAcompanhanteReserva extends javax.swing.JFrame {
+    FormInsercaoReserva formR;
     
-    public FormInsercaoFuncionario() {
+    public FormAcompanhanteReserva() {
         initComponents();
+       
     }
 
-    public FormInsercaoFuncionario(JFrame form) {
-        this();
-        this.ff = (FormFuncionario) form;
+    public FormAcompanhanteReserva(JFrame form) {
+       this();
+       formR = (FormInsercaoReserva) form;
     }
 
     @SuppressWarnings("unchecked")
@@ -26,30 +24,24 @@ public class FormInsercaoFuncionario extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jtfCodigo = new javax.swing.JTextField();
         jtfNome = new javax.swing.JTextField();
-        jtfNomeAcesso = new javax.swing.JTextField();
+        jtfIdade = new javax.swing.JTextField();
         btnInserir = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
-        jpfSenhaAcesso = new javax.swing.JPasswordField();
-        jLabel5 = new javax.swing.JLabel();
-        jsnNivel = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setEnabled(false);
 
         jPanel1.setBorder(new javax.swing.border.MatteBorder(null));
 
-        jLabel1.setText("Nome:");
+        jLabel1.setText("Código:");
 
-        jLabel2.setText("Código:");
+        jLabel2.setText("Nome:");
 
-        jLabel3.setText("Usuário:");
-
-        jLabel4.setText("Senha:");
+        jLabel3.setText("Idade:");
 
         jtfCodigo.setEditable(false);
+        jtfCodigo.setEnabled(false);
 
         btnInserir.setText("Inserir");
         btnInserir.addActionListener(new java.awt.event.ActionListener() {
@@ -65,10 +57,6 @@ public class FormInsercaoFuncionario extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setText("Nível:");
-
-        jsnNivel.setModel(new javax.swing.SpinnerNumberModel(1, 0, 1, 1));
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -78,57 +66,44 @@ public class FormInsercaoFuncionario extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel3)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel5))
+                            .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jtfNome, javax.swing.GroupLayout.DEFAULT_SIZE, 508, Short.MAX_VALUE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jsnNivel, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jtfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jtfNomeAcesso, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
-                                .addComponent(jpfSenhaAcesso))))
+                            .addComponent(jtfNome)
+                            .addComponent(jtfIdade)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 258, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnInserir)
-                        .addGap(184, 184, 184)
+                        .addGap(78, 78, 78)
                         .addComponent(btnVoltar)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(11, 11, 11)
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
+                    .addComponent(jLabel1)
                     .addComponent(jtfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
                     .addComponent(jtfNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jtfNomeAcesso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jpfSenhaAcesso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jsnNivel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jtfIdade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnInserir)
                     .addComponent(btnVoltar))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -151,14 +126,13 @@ public class FormInsercaoFuncionario extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
+        cadastrar();
+    }//GEN-LAST:event_btnInserirActionPerformed
+
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
-
-    private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
-        cadastrar();
-        ff.preencherTabelaFuncionario();
-    }//GEN-LAST:event_btnInserirActionPerformed
 
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -173,55 +147,48 @@ public class FormInsercaoFuncionario extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormInsercaoFuncionario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormAcompanhanteReserva.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormInsercaoFuncionario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormAcompanhanteReserva.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormInsercaoFuncionario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormAcompanhanteReserva.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormInsercaoFuncionario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormAcompanhanteReserva.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormInsercaoFuncionario().setVisible(true);
+                new FormAcompanhanteReserva().setVisible(true);
             }
         });
     }
     
     private void cadastrar() {
-        Funcionario f = new Funcionario();
-        
-        f.setNome(jtfNome.getText());
-        f.setNomeAcesso(jtfNomeAcesso.getText());
-        f.setSenhaAcesso(new String(jpfSenhaAcesso.getPassword()));
-        f.setNivelAcesso((int)jsnNivel.getValue());
+        Acompanhante acompanhante = new Acompanhante();
+        acompanhante.setNome(jtfNome.getText());
+        acompanhante.setIdade(Integer.parseInt(jtfIdade.getText()));
         
         try {
-            new FuncionarioDAO().inserir(f);
-            JOptionPane.showMessageDialog(this, "Funcionário inserido com sucesso.", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
-        
-        } catch(IllegalArgumentException e) {
-            JOptionPane.showMessageDialog(this, "[ERRO]: Ao inserir funcionário.", "ERRO", JOptionPane.ERROR_MESSAGE);
+            formR.adicionarAcompanhante(acompanhante);
+            
+        }catch(IllegalArgumentException e){
             throw new IllegalArgumentException(e);
+        }finally{
+            this.dispose();
         }
+        
     }
-
-    
+  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnInserir;
     private javax.swing.JButton btnVoltar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jpfSenhaAcesso;
-    private javax.swing.JSpinner jsnNivel;
     private javax.swing.JTextField jtfCodigo;
+    private javax.swing.JTextField jtfIdade;
     private javax.swing.JTextField jtfNome;
-    private javax.swing.JTextField jtfNomeAcesso;
     // End of variables declaration//GEN-END:variables
 }

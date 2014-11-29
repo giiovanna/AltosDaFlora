@@ -134,5 +134,35 @@ public class AcomodacaoDAO implements DAO<Acomodacao> {
         }
         return acomodacao;
     }
+    
+     public List<Acomodacao> buscarPorTipoAcomodacao(int codTipo) {
+        List<Acomodacao> acomodacoes = null;
+        String sql = "SELECT * FROM acomodacao where idTipoAcomodacao =?;";
 
+        try (Connection con = new Conexao().criarConexao();
+                PreparedStatement ps = con.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
+
+            ps.setInt(1, codTipo);
+            acomodacoes = new ArrayList<>();
+            TipoAcomodacao tipoAcomodacao;
+
+            while (rs.next()) {
+                Acomodacao acomodacao = new Acomodacao();
+
+                acomodacao.setId(rs.getInt("idAcomodacao"));
+                acomodacao.setAndar(rs.getInt("andar"));
+                acomodacao.setNumero(rs.getInt("nroAcomodacao"));
+
+                tipoAcomodacao = new TipoAcomodacaoDAO().buscar(rs.getInt("idTipoAcomodacao"));
+                acomodacao.setTipoAcomodacao(tipoAcomodacao);
+
+                acomodacoes.add(acomodacao);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return acomodacoes;
+    }
 }

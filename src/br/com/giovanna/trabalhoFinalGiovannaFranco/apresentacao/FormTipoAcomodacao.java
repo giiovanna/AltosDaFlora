@@ -16,7 +16,7 @@ public class FormTipoAcomodacao extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jcbCategoriaItem = new javax.swing.JComboBox();
+        jcbTipoAcomodacao = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
@@ -40,6 +40,12 @@ public class FormTipoAcomodacao extends javax.swing.JFrame {
 
         jPanel1.setBorder(new javax.swing.border.MatteBorder(null));
 
+        jcbTipoAcomodacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbTipoAcomodacaoActionPerformed(evt);
+            }
+        });
+
         jLabel1.setText("Tipo Acomodação");
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
@@ -49,6 +55,7 @@ public class FormTipoAcomodacao extends javax.swing.JFrame {
         jLabel3.setText("Código:");
 
         jtfCod.setEditable(false);
+        jtfCod.setEnabled(false);
 
         btnInserir.setText("Inserir");
         btnInserir.addActionListener(new java.awt.event.ActionListener() {
@@ -122,7 +129,7 @@ public class FormTipoAcomodacao extends javax.swing.JFrame {
                         .addGap(4, 4, 4)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jcbCategoriaItem, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jcbTipoAcomodacao, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel3)
@@ -136,7 +143,7 @@ public class FormTipoAcomodacao extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jcbCategoriaItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcbTipoAcomodacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -209,6 +216,10 @@ public class FormTipoAcomodacao extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
 
+    private void jcbTipoAcomodacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbTipoAcomodacaoActionPerformed
+        validarTipoAcomodacao();
+    }//GEN-LAST:event_jcbTipoAcomodacaoActionPerformed
+
     public static void main(String args[]) {
         
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -265,6 +276,10 @@ public class FormTipoAcomodacao extends javax.swing.JFrame {
         
         tipoAcomodacao.setPrecoDiaria(Double.parseDouble(jtfValorDiaria.getText()));
         tipoAcomodacao.setQtdeAcomodacoes(Integer.parseInt(jtfQtde.getText()));
+        tipoAcomodacao.setDescricao(jtfDescricao.getText());
+        tipoAcomodacao.setId(Integer.parseInt(jtfCod.getText()));
+        tipoAcomodacao.setNroAdulto(Integer.parseInt(jtfNAdulto.getText()));
+        tipoAcomodacao.setNroCrianca(Integer.parseInt(jtfNCrianca.getText()));
         
         try{
             new TipoAcomodacaoDAO().alterar(tipoAcomodacao);
@@ -296,14 +311,33 @@ public class FormTipoAcomodacao extends javax.swing.JFrame {
     }
    
     private void carregarTiposAcomodacoes() {
-        jcbCategoriaItem.removeAllItems();
-        jcbCategoriaItem.addItem("--- Selecione um Tipo de Acomodação ---");
+        jcbTipoAcomodacao.removeAllItems();
+        jcbTipoAcomodacao.addItem("Selecione um Tipo de Acomodação");
         
         for (TipoAcomodacao tipo : new TipoAcomodacaoDAO().listarTodos()) {
-            jcbCategoriaItem.addItem(tipo);
+            jcbTipoAcomodacao.addItem(tipo);
         }
     }
 
+    private void validarTipoAcomodacao(){
+        if(jcbTipoAcomodacao.getSelectedIndex() <= 0){
+           jtfCod.setText("");
+           jtfDescricao.setText("");
+           jtfNAdulto.setText("");
+           jtfNCrianca.setText("");
+           jtfQtde.setText("");
+           jtfValorDiaria.setText("");
+           
+        }else{
+            TipoAcomodacao ta = (TipoAcomodacao) jcbTipoAcomodacao.getSelectedItem();
+            jtfCod.setText(String.valueOf(ta.getId()));
+            jtfDescricao.setText(ta.getDescricao());
+            jtfNAdulto.setText(String.valueOf(ta.getNroAdulto()));
+            jtfNCrianca.setText(String.valueOf(ta.getNroCrianca()));
+            jtfQtde.setText(String.valueOf(ta.getQtdeAcomodacoes()));
+            jtfValorDiaria.setText(String.valueOf(ta.getPrecoDiaria()));
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnExcluir;
@@ -318,7 +352,7 @@ public class FormTipoAcomodacao extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JComboBox jcbCategoriaItem;
+    private javax.swing.JComboBox jcbTipoAcomodacao;
     private javax.swing.JTextField jtfCod;
     private javax.swing.JTextField jtfDescricao;
     private javax.swing.JTextField jtfNAdulto;

@@ -34,6 +34,12 @@ public class FormCategoriaItem extends javax.swing.JFrame {
 
         jPanel1.setBorder(new javax.swing.border.MatteBorder(null));
 
+        jcbCategoriaItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbCategoriaItemActionPerformed(evt);
+            }
+        });
+
         jLabel1.setText("Categorias");
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
@@ -43,6 +49,7 @@ public class FormCategoriaItem extends javax.swing.JFrame {
         jLabel3.setText("Código:");
 
         jtfCod.setEditable(false);
+        jtfCod.setEnabled(false);
 
         btnInserir.setText("Inserir");
         btnInserir.addActionListener(new java.awt.event.ActionListener() {
@@ -170,6 +177,12 @@ public class FormCategoriaItem extends javax.swing.JFrame {
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
+
+    private void jcbCategoriaItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbCategoriaItemActionPerformed
+        
+        validarCategoria();
+        
+    }//GEN-LAST:event_jcbCategoriaItemActionPerformed
     
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -205,9 +218,11 @@ public class FormCategoriaItem extends javax.swing.JFrame {
         List<CategoriaItem> categorias = new CategoriaItemDAO().listarTodos();
         
         jcbCategoriaItem.removeAllItems();
+        jcbCategoriaItem.addItem("Selicione uma categoria");
         for (CategoriaItem c : categorias){
             jcbCategoriaItem.addItem(c);
         }
+        
     }
     
     private void cadastrar(){
@@ -262,6 +277,16 @@ public class FormCategoriaItem extends javax.swing.JFrame {
         }
     }
 
+    private void validarCategoria(){
+        if(jcbCategoriaItem.getSelectedIndex() <= 0){
+           jtfCod.setText("");
+           jtfDescricao.setText("");
+        }else{
+            CategoriaItem ci = (CategoriaItem) jcbCategoriaItem.getSelectedItem();
+            jtfCod.setText(String.valueOf(ci.getCodCategoria()));
+            jtfDescricao.setText(ci.getDescricao());
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnExcluir;

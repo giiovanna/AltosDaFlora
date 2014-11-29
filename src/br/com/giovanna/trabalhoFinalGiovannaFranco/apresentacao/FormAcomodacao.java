@@ -11,6 +11,7 @@ public class FormAcomodacao extends javax.swing.JFrame {
     public FormAcomodacao() {
         initComponents();
         carregarTiposAcomodacoes();
+        carregarAcomodacoes();
     }
 
     @SuppressWarnings("unchecked")
@@ -38,6 +39,12 @@ public class FormAcomodacao extends javax.swing.JFrame {
 
         jPanel1.setBorder(new javax.swing.border.MatteBorder(null));
 
+        jcbAcomodacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbAcomodacaoActionPerformed(evt);
+            }
+        });
+
         jLabel1.setText("Acomodação");
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
@@ -47,6 +54,7 @@ public class FormAcomodacao extends javax.swing.JFrame {
         jLabel3.setText("Código:");
 
         jtfCod.setEditable(false);
+        jtfCod.setEnabled(false);
 
         btnInserir.setText("Inserir");
         btnInserir.addActionListener(new java.awt.event.ActionListener() {
@@ -191,12 +199,16 @@ public class FormAcomodacao extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        
+        excluir();
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
+
+    private void jcbAcomodacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbAcomodacaoActionPerformed
+        validarAcomodação();
+    }//GEN-LAST:event_jcbAcomodacaoActionPerformed
 
     public static void main(String args[]) {
         
@@ -240,11 +252,13 @@ public class FormAcomodacao extends javax.swing.JFrame {
         try {
             new AcomodacaoDAO().inserir(acomodacao);
             JOptionPane.showMessageDialog(this,"Acomodação foi cadastrado!","SUCESSO", JOptionPane.INFORMATION_MESSAGE);
-            carregarTiposAcomodacoes();
+            carregarAcomodacoes();
             
         }catch(IllegalArgumentException e){
             JOptionPane.showMessageDialog(this,"Acomodação não foi inserida!","ERRO", 1);
             throw new IllegalArgumentException(e);
+        }finally{
+            limparCampos();
         }
         
     }
@@ -256,16 +270,20 @@ public class FormAcomodacao extends javax.swing.JFrame {
         acomodacao.setNumero(Integer.parseInt(jtfNroAcomodacao.getText()));
         acomodacao.setAndar(Integer.parseInt(jtfAndar.getText()));
         acomodacao.setTipoAcomodacao(ta);
+        acomodacao.setId(Integer.parseInt(jtfCod.getText()));
+        
         
         try {
             new AcomodacaoDAO().alterar(acomodacao);
             JOptionPane.showMessageDialog(this,"Acomodação foi alterada!","SUCESSO", JOptionPane.INFORMATION_MESSAGE);
-            carregarTiposAcomodacoes();
+            carregarAcomodacoes();
             
         }catch(IllegalArgumentException e){
             
             JOptionPane.showMessageDialog(this,"Acomodação não foi alterada!","ERRO", 1);
             throw new IllegalArgumentException(e);
+        }finally{
+            limparCampos();
         }
     }
     
@@ -277,15 +295,18 @@ public class FormAcomodacao extends javax.swing.JFrame {
         try{
             new AcomodacaoDAO().excluir(idAcomodacao);
             JOptionPane.showMessageDialog(this,"Acomodação foi excluída!","SUCESSO", 1);
+            carregarAcomodacoes();
         }catch(IllegalArgumentException e){
             JOptionPane.showMessageDialog(this,"Acomodação não foi excluída!","ERRO", 1);
             throw new IllegalArgumentException(e);
+        }finally{
+            limparCampos();
         }
     }
     
     private void carregarTiposAcomodacoes() {
         jcbTipoAcomodacao.removeAllItems();
-        jcbTipoAcomodacao.addItem("--- Selecione um Tipo de Acomodação ---");
+        jcbTipoAcomodacao.addItem("Selecione um Tipo de Acomodação");
         
         for (TipoAcomodacao tipo : new TipoAcomodacaoDAO().listarTodos()) {
             jcbTipoAcomodacao.addItem(tipo);
@@ -293,14 +314,38 @@ public class FormAcomodacao extends javax.swing.JFrame {
     }
     
     private void carregarAcomodacoes() {
-        jcbTipoAcomodacao.removeAllItems();
-        jcbTipoAcomodacao.addItem("--- Selecione Acomodação ---");
+        jcbAcomodacao.removeAllItems();
+        jcbAcomodacao.addItem("Selecione Acomodação");
         
-        for (TipoAcomodacao tipo : new TipoAcomodacaoDAO().listarTodos()) {
-            jcbTipoAcomodacao.addItem(tipo);
+        for (Acomodacao ac : new AcomodacaoDAO().listarTodos()) {
+            jcbAcomodacao.addItem(ac);
         }
     }
 
+    private void validarAcomodação(){
+        if(jcbAcomodacao.getSelectedIndex() <= 0){
+           jtfCod.setText("");
+           jtfAndar.setText("");
+           jtfNroAcomodacao.setText("");
+           jcbTipoAcomodacao.setSelectedIndex(0);
+           
+        }else{
+            Acomodacao ac = (Acomodacao) jcbAcomodacao.getSelectedItem();
+            
+            jtfCod.setText(String.valueOf(ac.getId()));
+            jtfAndar.setText(String.valueOf(ac.getAndar()));
+            jtfNroAcomodacao.setText(String.valueOf(ac.getNumero()));
+            jcbTipoAcomodacao.setSelectedItem(ac.getTipoAcomodacao().getDescricao());//nao aparece  
+        }
+    }
+    
+    private void limparCampos(){
+        jtfAndar.setText("");
+        jtfCod.setText("");
+        jtfNroAcomodacao.setText("");
+        jcbTipoAcomodacao.setSelectedIndex(0);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnExcluir;

@@ -1,18 +1,18 @@
 package br.com.giovanna.trabalhoFinalGiovannaFranco.apresentacao;
 
-import br.com.giovanna.trabalhoFinalGiovannaFranco.controle.HospedeDAO;
-import br.com.giovanna.trabalhoFinalGiovannaFranco.modelo.Hospede;
+import br.com.giovanna.trabalhoFinalGiovannaFranco.controle.FuncionarioDAO;
+import br.com.giovanna.trabalhoFinalGiovannaFranco.modelo.Funcionario;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-public class FormHospede extends javax.swing.JFrame {
-    TableModelHospede modeloTabelaHospede;
-    Hospede hospede;
+public class FormFuncionario extends javax.swing.JFrame {
+    TableModelFuncionario modelotabelaFunc;
+    Funcionario func;
     
-    public FormHospede() {
+    public FormFuncionario() {
         initComponents();
-        instanciarTabelaHospede();
-        preencherTabelaHospede();
+        instanciarTabelaFuncionario();
+        preencherTabelaFuncionario();
     }
 
     @SuppressWarnings("unchecked")
@@ -21,7 +21,7 @@ public class FormHospede extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jtHospede = new javax.swing.JTable();
+        jtFuncionario = new javax.swing.JTable();
         btnInserir = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
@@ -32,7 +32,7 @@ public class FormHospede extends javax.swing.JFrame {
 
         jPanel1.setBorder(new javax.swing.border.MatteBorder(null));
 
-        jtHospede.setModel(new javax.swing.table.DefaultTableModel(
+        jtFuncionario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -43,12 +43,12 @@ public class FormHospede extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jtHospede.addMouseListener(new java.awt.event.MouseAdapter() {
+        jtFuncionario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jtHospedeMouseClicked(evt);
+                jtFuncionarioMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jtHospede);
+        jScrollPane1.setViewportView(jtFuncionario);
 
         btnInserir.setText("Inserir novo hóspede");
         btnInserir.addActionListener(new java.awt.event.ActionListener() {
@@ -79,37 +79,35 @@ public class FormHospede extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setText("Lista de hóspedes");
+        jLabel1.setText("Lista de Funcionários");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 711, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(14, 14, 14)
+                        .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnInserir)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 711, Short.MAX_VALUE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(14, 14, 14)
-                                .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnInserir)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -141,22 +139,23 @@ public class FormHospede extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
-        exibirTelaHospede();
+        exibirTelaFunc();
     }//GEN-LAST:event_btnInserirActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        FormAlteracaoHospede fah = new FormAlteracaoHospede(hospede);
-        fah.setVisible(true);
+        FormAlteracaoFuncionario ff = new FormAlteracaoFuncionario(func);
+        ff.setVisible(true);
     }//GEN-LAST:event_btnAlterarActionPerformed
 
-    private void jtHospedeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtHospedeMouseClicked
-       int linhaSelecionada = jtHospede.getSelectedRow();
-       modeloTabelaHospede = (TableModelHospede)jtHospede.getModel();
-       hospede = modeloTabelaHospede.retornarObjetoSelecionado(linhaSelecionada);
-    }//GEN-LAST:event_jtHospedeMouseClicked
+    private void jtFuncionarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtFuncionarioMouseClicked
+       int linhaSelecionada = jtFuncionario.getSelectedRow();
+       modelotabelaFunc = (TableModelFuncionario)jtFuncionario.getModel();
+       func = modelotabelaFunc.retornarObjetoSelecionado(linhaSelecionada);
+    }//GEN-LAST:event_jtFuncionarioMouseClicked
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         confirmarExclusao();
+        preencherTabelaFuncionario();
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
@@ -176,47 +175,48 @@ public class FormHospede extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormHospede.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormFuncionario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormHospede.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormFuncionario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormHospede.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormFuncionario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormHospede.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormFuncionario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormHospede().setVisible(true);
+                new FormFuncionario().setVisible(true);
             }
         });
     }
     
     private void confirmarExclusao(){
         int confirmacao = JOptionPane.YES_NO_OPTION;
-            JOptionPane.showConfirmDialog (this, "Tem certeza que deseja excluir hóspede?","WARNING",confirmacao);
+            JOptionPane.showConfirmDialog (this, "Tem certeza que deseja excluir Funcionário?","WARNING",confirmacao);
             
             if(confirmacao == JOptionPane.YES_OPTION) {
-               new HospedeDAO().mudarStatus(0,hospede.getId());
-               JOptionPane.showMessageDialog(this,"Hóspede excluído com sucesso! ");
-               preencherTabelaHospede();
+                new FuncionarioDAO().excluir(func.getId());
+                JOptionPane.showMessageDialog(this,"Funcionário excluído com sucesso!");
+               
             }
         
     }
     
-    private void exibirTelaHospede() {
-        new FormInsercaoHospede(this).setVisible(true);
+    public void preencherTabelaFuncionario(){
+        modelotabelaFunc = new TableModelFuncionario((ArrayList<Funcionario>) new FuncionarioDAO().listarTodos());
+        jtFuncionario.setModel(modelotabelaFunc);
+       
     }
     
-    public void preencherTabelaHospede(){
-        modeloTabelaHospede = new TableModelHospede((ArrayList<Hospede>) new HospedeDAO().listarAtivos());
-        jtHospede.setModel(modeloTabelaHospede);
+    private void exibirTelaFunc() {
+        new FormInsercaoFuncionario(this).setVisible(true);
     }
     
-    private void instanciarTabelaHospede(){
-        modeloTabelaHospede = new TableModelHospede();
-        jtHospede.setModel(modeloTabelaHospede);
+    private void instanciarTabelaFuncionario(){
+        modelotabelaFunc = new TableModelFuncionario();
+        jtFuncionario.setModel(modelotabelaFunc);
     }   
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -227,6 +227,6 @@ public class FormHospede extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jtHospede;
+    private javax.swing.JTable jtFuncionario;
     // End of variables declaration//GEN-END:variables
 }

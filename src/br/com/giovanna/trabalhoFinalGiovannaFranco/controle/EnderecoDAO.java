@@ -59,6 +59,7 @@ public class EnderecoDAO implements DAO<Endereco> {
             ps.setString(4, e.getCidade());
             ps.setString(5, e.getUf());
             ps.setString(6, e.getCEP());
+            ps.setInt(7, e.getId());
             
             ps.executeUpdate();
            

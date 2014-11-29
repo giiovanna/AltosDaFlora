@@ -1,29 +1,35 @@
 package br.com.giovanna.trabalhoFinalGiovannaFranco.apresentacao;
 
 import br.com.giovanna.trabalhoFinalGiovannaFranco.controle.AcomodacaoDAO;
+import br.com.giovanna.trabalhoFinalGiovannaFranco.controle.AcompanhanteDAO;
 import br.com.giovanna.trabalhoFinalGiovannaFranco.controle.EntradaDAO;
 import br.com.giovanna.trabalhoFinalGiovannaFranco.controle.FuncionarioDAO;
 import br.com.giovanna.trabalhoFinalGiovannaFranco.controle.HospedeDAO;
+import br.com.giovanna.trabalhoFinalGiovannaFranco.controle.ReservaDAO;
 import br.com.giovanna.trabalhoFinalGiovannaFranco.modelo.Acomodacao;
 import br.com.giovanna.trabalhoFinalGiovannaFranco.modelo.Acompanhante;
 import br.com.giovanna.trabalhoFinalGiovannaFranco.modelo.Entrada;
 import br.com.giovanna.trabalhoFinalGiovannaFranco.modelo.Funcionario;
 import br.com.giovanna.trabalhoFinalGiovannaFranco.modelo.Hospede;
-import java.util.ArrayList;
-import java.util.List;
+import br.com.giovanna.trabalhoFinalGiovannaFranco.modelo.Reserva;
+import java.util.*;
 import javax.swing.JOptionPane;
 
-public class FormEntrada extends javax.swing.JFrame {
 
+public class FormInsercaoEntrada extends javax.swing.JFrame {
     private List<Acompanhante> acompanhantes;
     private int adulto;
     private int crianca;
+    TableModelAcompanhante modeloAcompanhante;
 
-    public FormEntrada() {
+    public FormInsercaoEntrada() {
         initComponents();
         carregarAcomodacao();
         carregarFuncionario();
         carregarHospede();
+        instanciarTabelaAcompanhante();
+        jdcDataChegada.setDate(new Date());
+       
         acompanhantes = new ArrayList<>();
         adulto = 1;
         crianca = 0;
@@ -48,15 +54,13 @@ public class FormEntrada extends javax.swing.JFrame {
         jcbHospede = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
         btnAdicionarAcompanhante = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
         jLabel7 = new javax.swing.JLabel();
         btnExcluirAcompanhante = new javax.swing.JButton();
-        btnAlterarInformacoesAcompanhante = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jtAcompanhante = new javax.swing.JTable();
         btnInserir = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        btnAlterar = new javax.swing.JButton();
-        btnExcluir = new javax.swing.JButton();
+        btnInserirPorReserva = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -65,8 +69,11 @@ public class FormEntrada extends javax.swing.JFrame {
         jLabel2.setText("Código:");
 
         jtfCodigo.setEditable(false);
+        jtfCodigo.setEnabled(false);
 
         jLabel3.setText("Data de chegada:");
+
+        jdcDataChegada.setEnabled(false);
 
         jLabel4.setText("Data de saída:");
 
@@ -91,15 +98,32 @@ public class FormEntrada extends javax.swing.JFrame {
             }
         });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
-
         jLabel7.setText("Acompanhantes");
 
         btnExcluirAcompanhante.setText("Excluir acompanhante");
+        btnExcluirAcompanhante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirAcompanhanteActionPerformed(evt);
+            }
+        });
 
-        btnAlterarInformacoesAcompanhante.setText("Alterar informações");
+        jtAcompanhante.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jtAcompanhante.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtAcompanhanteMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jtAcompanhante);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -113,15 +137,14 @@ public class FormEntrada extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jcbHospede, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                        .addComponent(jLabel7)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnAdicionarAcompanhante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnExcluirAcompanhante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnAlterarInformacoesAcompanhante, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addComponent(btnExcluirAcompanhante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -130,18 +153,16 @@ public class FormEntrada extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jcbHospede, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(btnAdicionarAcompanhante)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnAlterarInformacoesAcompanhante)
-                        .addGap(8, 8, 8)
-                        .addComponent(btnExcluirAcompanhante)))
-                .addContainerGap())
+                        .addGap(18, 18, 18)
+                        .addComponent(btnExcluirAcompanhante))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(319, 319, 319))
         );
 
         btnInserir.setText("Inserir Entrada");
@@ -152,10 +173,18 @@ public class FormEntrada extends javax.swing.JFrame {
         });
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
-        btnAlterar.setText("Alterar");
-
-        btnExcluir.setText("Excluir");
+        btnInserirPorReserva.setText("Inserir a partir de Reserva");
+        btnInserirPorReserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInserirPorReservaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -189,14 +218,12 @@ public class FormEntrada extends javax.swing.JFrame {
                                         .addComponent(jLabel6)
                                         .addGap(18, 18, 18)
                                         .addComponent(jcbFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnAlterar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnExcluir)
-                        .addGap(102, 102, 102)
-                        .addComponent(btnInserir)
+                        .addGap(0, 60, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnInserirPorReserva)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnInserir)
+                        .addGap(187, 187, 187)
                         .addComponent(btnCancelar)))
                 .addContainerGap())
         );
@@ -224,14 +251,13 @@ public class FormEntrada extends javax.swing.JFrame {
                                 .addComponent(jcbFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(jcbAcomodacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 222, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAlterar)
                     .addComponent(btnInserir)
                     .addComponent(btnCancelar)
-                    .addComponent(btnExcluir))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnInserirPorReserva))
+                .addGap(19, 19, 19))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -247,8 +273,8 @@ public class FormEntrada extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -259,9 +285,38 @@ public class FormEntrada extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInserirActionPerformed
 
     private void btnAdicionarAcompanhanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarAcompanhanteActionPerformed
-        FormAcompanhante fa = new FormAcompanhante(this);
-        fa.setVisible(true);
+       exibirTelaAcompanhante();
     }//GEN-LAST:event_btnAdicionarAcompanhanteActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void jtAcompanhanteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtAcompanhanteMouseClicked
+       int linhaSelecionada = jtAcompanhante.getSelectedRow();
+       modeloAcompanhante = (TableModelAcompanhante)jtAcompanhante.getModel();
+       Acompanhante ac = modeloAcompanhante.retornarObjetoSelecionado(linhaSelecionada);
+    }//GEN-LAST:event_jtAcompanhanteMouseClicked
+
+    private void btnExcluirAcompanhanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirAcompanhanteActionPerformed
+        excluirAcompanhante();
+    }//GEN-LAST:event_btnExcluirAcompanhanteActionPerformed
+
+    private void btnInserirPorReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirPorReservaActionPerformed
+        String nome = JOptionPane.showInputDialog(this,"Informe o nome do hóspede que fez a reserva:");
+        
+        ReservaDAO dao =new ReservaDAO();
+        Reserva re = dao.buscarPorNome(nome);
+        
+        jdcDataChegada.setDate(re.getDataChegada());
+        jdcDataSaida.setDate(re.getDataSaida());
+        jcbFuncionario.setSelectedItem(re.getFuncionario().getNome());
+        jcbHospede.setSelectedItem(re.getHospede().getNome());
+        
+        carregarAcomodacaoPorTipo(re.getTipoAcomodacao().getId());
+                
+        
+    }//GEN-LAST:event_btnInserirPorReservaActionPerformed
 
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -276,19 +331,19 @@ public class FormEntrada extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormEntrada.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormInsercaoEntrada.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormEntrada.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormInsercaoEntrada.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormEntrada.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormInsercaoEntrada.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormEntrada.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormInsercaoEntrada.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormEntrada().setVisible(true);
+                new FormInsercaoEntrada().setVisible(true);
             }
         });
     }
@@ -314,15 +369,39 @@ public class FormEntrada extends javax.swing.JFrame {
         try {
             new EntradaDAO().inserir(et);
             JOptionPane.showMessageDialog(this, "Entrada foi inserida!", "SUCESSO", 1);
-
+            
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(this, "Entrada não foi inserida!", "ERRO", 1);
             throw new IllegalArgumentException(e);
         }
     }
+    
+    private void carregarReserva(){
+        String nome = JOptionPane.showInputDialog(this,"Informe o nome do hóspede que fez a reserva:");
+        
+        ReservaDAO dao =new ReservaDAO();
+        Reserva re = dao.buscarPorNome(nome);
+        
+        jdcDataChegada.setDate(re.getDataChegada());
+        jdcDataSaida.setDate(re.getDataSaida());
+        jcbFuncionario.setSelectedItem(re.getFuncionario().getNome());
+        jcbHospede.setSelectedItem(re.getHospede().getNome());
+        
+        carregarAcomodacaoPorTipo(re.getTipoAcomodacao().getId());           
+        
+    }
 
     private void carregarAcomodacao() {
         List<Acomodacao> acm = new AcomodacaoDAO().listarTodos();
+
+        jcbAcomodacao.removeAllItems();
+        for (Acomodacao a : acm) {
+            jcbAcomodacao.addItem(a);
+        }
+    }
+    
+    private void carregarAcomodacaoPorTipo(int cod) {
+        List<Acomodacao> acm = new AcomodacaoDAO().buscarPorTipoAcomodacao(cod);
 
         jcbAcomodacao.removeAllItems();
         for (Acomodacao a : acm) {
@@ -350,6 +429,7 @@ public class FormEntrada extends javax.swing.JFrame {
 
     public void adicionarAcompanhante(Acompanhante a) {
         verificarAcompanhantes(a);
+        
     }
 
     private void verificarAcompanhantes(Acompanhante a) {
@@ -364,6 +444,8 @@ public class FormEntrada extends javax.swing.JFrame {
                 acompanhantes.add(a);
                 adulto++;
                 JOptionPane.showMessageDialog(this, "Acompanhante do tipo adulto inserido!");
+                new AcompanhanteDAO().inserir(a);
+                modeloAcompanhante.addRow(a);
             }
         } else {
             if (crianca >= nroCriancas) {
@@ -373,18 +455,45 @@ public class FormEntrada extends javax.swing.JFrame {
                 acompanhantes.add(a);
                 crianca++;
                 JOptionPane.showMessageDialog(this, "Acompanhante do tipo criança inserido!");
+                new AcompanhanteDAO().inserir(a);
+                modeloAcompanhante.addRow(a);
             }
         }
+        
+    }
+    
+    private void instanciarTabelaAcompanhante() {
+        modeloAcompanhante = new TableModelAcompanhante();
+        jtAcompanhante.setModel(modeloAcompanhante);
     }
 
+    private void exibirTelaAcompanhante(){
+        FormAcompanhanteEntrada fa = new FormAcompanhanteEntrada(this);
+        fa.setVisible(true);
+    }
+    
+    private void excluirAcompanhante() {
+        int linhaSelecionada = jtAcompanhante.getSelectedRow();
+        
+        if (linhaSelecionada >= 0) {
+            Acompanhante a = modeloAcompanhante.retornarObjetoSelecionado(linhaSelecionada);
+                       
+            modeloAcompanhante.removeRow(linhaSelecionada);
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecione o item que deseja remover da tabela.");
+        }
+    }
+    
+    public void inserirItem(Acompanhante a) {
+        modeloAcompanhante.addRow(a);
+        
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdicionarAcompanhante;
-    private javax.swing.JButton btnAlterar;
-    private javax.swing.JButton btnAlterarInformacoesAcompanhante;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnExcluirAcompanhante;
     private javax.swing.JButton btnInserir;
+    private javax.swing.JButton btnInserirPorReserva;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -394,13 +503,15 @@ public class FormEntrada extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JComboBox jcbAcomodacao;
     private javax.swing.JComboBox jcbFuncionario;
     private javax.swing.JComboBox jcbHospede;
     private com.toedter.calendar.JDateChooser jdcDataChegada;
     private com.toedter.calendar.JDateChooser jdcDataSaida;
+    private javax.swing.JTable jtAcompanhante;
     private javax.swing.JTextField jtfCodigo;
     // End of variables declaration//GEN-END:variables
+
+    
 }
