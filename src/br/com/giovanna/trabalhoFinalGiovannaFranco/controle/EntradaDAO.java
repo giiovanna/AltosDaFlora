@@ -45,7 +45,7 @@ public class EntradaDAO implements DAO<Entrada> {
         }
         
         // INSERE ACOMPANHANTES DA ENTRADA PREVIAMENTE CADASTRADA
-        sql = "INSERT INTO acompanhante_entrada (idAcompanhante,idEntrada) VALUES(?,?)";
+        sql = "INSERT INTO entrada_acompanhante (idAcompanhante,idEntrada) VALUES(?,?)";
         
         try (Connection con = new Conexao().criarConexao();
                 PreparedStatement ps = con.prepareStatement(sql)) {

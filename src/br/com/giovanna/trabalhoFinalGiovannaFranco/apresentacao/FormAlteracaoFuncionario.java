@@ -5,17 +5,23 @@ import br.com.giovanna.trabalhoFinalGiovannaFranco.modelo.Funcionario;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-public class FormInsercaoFuncionario extends javax.swing.JFrame {
+public class FormAlteracaoFuncionario extends javax.swing.JFrame {
     private FormFuncionario ff;
     private Funcionario funcionario;
     
-    public FormInsercaoFuncionario() {
+    public FormAlteracaoFuncionario() {
         initComponents();
     }
 
-    public FormInsercaoFuncionario(JFrame form) {
+    public FormAlteracaoFuncionario(JFrame form) {
         this();
         this.ff = (FormFuncionario) form;
+    }
+
+    public FormAlteracaoFuncionario(Funcionario func) {
+        this();
+        funcionario = func;
+        preencherCampos();
     }
 
     @SuppressWarnings("unchecked")
@@ -37,7 +43,6 @@ public class FormInsercaoFuncionario extends javax.swing.JFrame {
         jsnNivel = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setEnabled(false);
 
         jPanel1.setBorder(new javax.swing.border.MatteBorder(null));
 
@@ -51,7 +56,7 @@ public class FormInsercaoFuncionario extends javax.swing.JFrame {
 
         jtfCodigo.setEditable(false);
 
-        btnInserir.setText("Inserir");
+        btnInserir.setText("Alterar");
         btnInserir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInserirActionPerformed(evt);
@@ -99,7 +104,7 @@ public class FormInsercaoFuncionario extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnInserir)
-                        .addGap(184, 184, 184)
+                        .addGap(180, 180, 180)
                         .addComponent(btnVoltar)))
                 .addContainerGap())
         );
@@ -156,28 +161,36 @@ public class FormInsercaoFuncionario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
-        cadastrar();
+        alterar();
         ff.preencherTabelaFuncionario();
     }//GEN-LAST:event_btnInserirActionPerformed
-    
-    private void cadastrar() {
+
+    private void alterar(){
         Funcionario f = new Funcionario();
         
         f.setNome(jtfNome.getText());
         f.setNomeAcesso(jtfNomeAcesso.getText());
         f.setSenhaAcesso(new String(jpfSenhaAcesso.getPassword()));
         f.setNivelAcesso((int)jsnNivel.getValue());
-        
-        try {
-            new FuncionarioDAO().inserir(f);
-            JOptionPane.showMessageDialog(this, "Funcionário inserido com sucesso.", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
-        
-        } catch(IllegalArgumentException e) {
-            JOptionPane.showMessageDialog(this, "[ERRO]: Ao inserir funcionário.", "ERRO", JOptionPane.ERROR_MESSAGE);
+            
+        try{
+            new FuncionarioDAO().alterar(f);
+            JOptionPane.showMessageDialog(this,"Funcionário foi alterado!","SUCESSO", 1);
+                        
+        }catch(IllegalArgumentException e){
+            JOptionPane.showMessageDialog(this,"Funcionáriio não foi alterado!","ERRO", 1);
             throw new IllegalArgumentException(e);
         }
+        
     }
-
+  
+    private void preencherCampos(){
+        jtfCodigo.setText(String.valueOf(funcionario.getId()));
+        jtfNome.setText(funcionario.getNome());
+        jtfNomeAcesso.setText(funcionario.getNomeAcesso());
+        jpfSenhaAcesso.setText(funcionario.getSenhaAcesso());
+    }
+    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnInserir;

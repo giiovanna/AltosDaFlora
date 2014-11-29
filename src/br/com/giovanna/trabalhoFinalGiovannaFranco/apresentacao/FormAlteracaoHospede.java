@@ -5,24 +5,20 @@ import br.com.giovanna.trabalhoFinalGiovannaFranco.modelo.Contato;
 import br.com.giovanna.trabalhoFinalGiovannaFranco.modelo.Endereco;
 import br.com.giovanna.trabalhoFinalGiovannaFranco.modelo.Hospede;
 import java.util.Date;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-public class FormInsercaoHospede extends javax.swing.JFrame {
+public class FormAlteracaoHospede extends javax.swing.JFrame {
+
     private Hospede h;
     private FormHospede fh;
-    
-    public FormInsercaoHospede() {
+
+    public FormAlteracaoHospede(FormHospede fh, Hospede hospede) {
         initComponents();
+        this.fh = fh;
+        h = hospede;
+        preencherCampos();
     }
-    
-    public FormInsercaoHospede(JFrame form) {
-       this();
-      
-       fh = (FormHospede) form;
-       
-    }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -56,12 +52,11 @@ public class FormInsercaoHospede extends javax.swing.JFrame {
         jtfCodigo = new javax.swing.JTextField();
         jtfNome = new javax.swing.JTextField();
         jtfRg = new javax.swing.JTextField();
-        btnInserir = new javax.swing.JButton();
+        btnInserirAlterar = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
         jdcDataNascimento = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setEnabled(false);
 
         jPanel1.setBorder(new javax.swing.border.MatteBorder(null));
 
@@ -186,10 +181,10 @@ public class FormInsercaoHospede extends javax.swing.JFrame {
 
         jtfCodigo.setEditable(false);
 
-        btnInserir.setText("Inserir");
-        btnInserir.addActionListener(new java.awt.event.ActionListener() {
+        btnInserirAlterar.setText("Alterar");
+        btnInserirAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInserirActionPerformed(evt);
+                btnInserirAlterarActionPerformed(evt);
             }
         });
 
@@ -227,7 +222,8 @@ public class FormInsercaoHospede extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jdcDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnInserirAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(147, 147, 147)
                         .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -254,7 +250,7 @@ public class FormInsercaoHospede extends javax.swing.JFrame {
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnInserir)
+                            .addComponent(btnInserirAlterar)
                             .addComponent(btnVoltar)))
                     .addComponent(jdcDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -284,23 +280,23 @@ public class FormInsercaoHospede extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
 
-    private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
-        inserirHospede();
-        this.dispose();
+    private void btnInserirAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirAlterarActionPerformed
+        alterarHospede();
         fh.preencherTabelaHospede();
-    }//GEN-LAST:event_btnInserirActionPerformed
- 
-    private void inserirHospede() {
+        this.dispose();
+    }//GEN-LAST:event_btnInserirAlterarActionPerformed
+
+    private void alterarHospede() {
         String nome;
         String rg;
         Date dataNascimento;
-        
-        Hospede hospede = new Hospede();
+
+        //Hospede hospede = new Hospede();
         HospedeDAO hDAO = new HospedeDAO();
-        
-        Endereco e = new Endereco();
-        Contato c = new Contato();
-        
+
+        Endereco e = h.getEndereco();
+        Contato c = h.getContato();
+
         nome = jtfNome.getText();
         rg = jtfRg.getText();
         dataNascimento = jdcDataNascimento.getDate();
@@ -311,25 +307,43 @@ public class FormInsercaoHospede extends javax.swing.JFrame {
         e.setLogradouro(jtfLogradouro.getText());
         e.setNumero(Integer.parseInt(jtfNro.getText()));
         e.setUf(jcbUf.getSelectedItem().toString());
-        
+
         c.setCelular(jtfCelular.getText());
         c.setEmail(jtfEmail.getText());
         c.setTelCom(jtfTelCom.getText());
         c.setTelResid(jtfTelRes.getText());
         
-        hospede.setContato(c);
-        hospede.setDataNasc(dataNascimento);
-        hospede.setEndereco(e);
-        hospede.setNome(nome);
-        hospede.setRg(rg);
-        
-        hDAO.inserir(hospede);
-        JOptionPane.showMessageDialog(null, "Hospede inserido com sucesso!");
+        h.setContato(c);
+        h.setDataNasc(dataNascimento);
+        h.setEndereco(e);
+        h.setNome(nome);
+        h.setRg(rg);
+
+        hDAO.alterar(h);
+        JOptionPane.showMessageDialog(null, "Hospede alterado com sucesso!");
     }
-    
-    
+
+    private void preencherCampos() {
+        if (h != null) {
+            jdcDataNascimento.setDate(h.getDataNasc());
+            jtfNome.setText(h.getNome());
+            jtfBairro.setText(h.getEndereco().getBairro());
+            jtfCelular.setText(h.getContato().getCelular());
+            jtfCep.setText(h.getEndereco().getCEP());
+            jtfCidade.setText(h.getEndereco().getCidade());
+            jtfCodigo.setText(String.valueOf(h.getId()));
+            jtfEmail.setText(h.getContato().getEmail());
+            jtfLogradouro.setText(h.getEndereco().getLogradouro());
+            jtfNro.setText(String.valueOf(h.getEndereco().getNumero()));
+            jtfRg.setText(h.getRg());
+            jtfTelCom.setText(h.getContato().getTelCom());
+            jtfTelRes.setText(h.getContato().getTelResid());
+            jcbUf.setSelectedItem(h.getEndereco().getUf());
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnInserir;
+    private javax.swing.JButton btnInserirAlterar;
     private javax.swing.JButton btnVoltar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

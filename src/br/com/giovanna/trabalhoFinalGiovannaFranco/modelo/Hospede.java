@@ -9,7 +9,8 @@ public class Hospede {
     private Date dataNasc;
     private Contato contato;
     private Endereco endereco;
-
+    private int ativo;
+    
     public int getId() {
         return id;
     }
@@ -61,6 +62,14 @@ public class Hospede {
     @Override
     public String toString() {
         return nome;
+    }
+
+    public int getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(int ativo) {
+        this.ativo = ativo;
     }
     
     

@@ -54,8 +54,7 @@ public class HospedeDAO implements DAO<Hospede> {
 
     @Override
     public void alterar(Hospede h) {
-        String sql = "UPDATE Hospede SET nome=?,rg=?,dataNascimento=?"
-                + "VALUES (?,?,?) WHERE idHospede=?;";
+        String sql = "UPDATE Hospede SET nome=?,rg=?,dataNascimento=? WHERE idHospede=?;";
 
         EnderecoDAO eDAO = new EnderecoDAO();
         ContatoDAO cDAO = new ContatoDAO();
@@ -70,7 +69,6 @@ public class HospedeDAO implements DAO<Hospede> {
             ps.setString(2, h.getRg());
             ps.setDate(3, new Date(h.getDataNasc().getTime()));
             ps.setInt(4, h.getId());
-
             ps.executeUpdate();
 
         } catch (SQLException e) {
@@ -172,5 +170,58 @@ public class HospedeDAO implements DAO<Hospede> {
         }
         return hospede;
     }
+    
+    public List<Hospede> listarAtivos() {
+        List<Hospede> hospedes = null;
+        String sql = "SELECT * FROM Hospede where ativo = 1;";
+        
+        EnderecoDAO eDAO = new EnderecoDAO();
+        ContatoDAO cDAO = new ContatoDAO();
+        
+        Endereco endereco;
+        Contato contato;
+        
+        try (Connection con = new Conexao().criarConexao();
+                PreparedStatement ps = con.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
 
+            hospedes = new ArrayList<>();
+
+            while (rs.next()) {
+                Hospede hospede = new Hospede();
+
+                hospede.setId(rs.getInt("idHospede"));
+                hospede.setNome(rs.getString("nome"));
+                hospede.setRg(rs.getString("rg"));
+                hospede.setDataNasc(rs.getDate("dataNascimento"));
+                
+                endereco = eDAO.buscar(rs.getInt("idEndereco"));
+                contato = cDAO.buscar(rs.getInt("idContato"));
+                
+                hospede.setEndereco(endereco);
+                hospede.setContato(contato);
+
+                hospedes.add(hospede);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return hospedes;
+    }
+
+    public void mudarStatus(int nro,int cod){
+        String sql = "UPDATE hospede set ativo =? where idHospede =?";
+
+        try (Connection con = new Conexao().criarConexao();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            
+            ps.setInt(1, nro);
+            ps.setInt(2, cod);
+            ps.executeUpdate();
+        
+        }catch(SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

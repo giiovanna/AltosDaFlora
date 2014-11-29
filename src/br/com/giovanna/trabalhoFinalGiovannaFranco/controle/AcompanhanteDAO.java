@@ -98,7 +98,7 @@ public class AcompanhanteDAO implements DAO<Acompanhante> {
     
     public List<Acompanhante> getListaReserva(int idReserva) {
         List<Acompanhante> acompanhantes = null;
-        String sql = "SELECT * FROM reserva_acompanhante WHERE idEntrada=?";
+        String sql = "SELECT * FROM reserva_acompanhante WHERE idReserva=?";
 
         try (Connection con = new Conexao().criarConexao();
                 PreparedStatement ps = con.prepareStatement(sql)) {

@@ -1,6 +1,7 @@
 package br.com.giovanna.trabalhoFinalGiovannaFranco.modelo;
 
 public class Funcionario {
+
     private int id;
     private String nome;
     private String senhaAcesso;
@@ -14,7 +15,7 @@ public class Funcionario {
     public void setId(int id) {
         this.id = id;
     }
-    
+
     public String getNome() {
         return nome;
     }
@@ -22,7 +23,7 @@ public class Funcionario {
     public void setNome(String nome) {
         this.nome = nome;
     }
-    
+
     public String getSenhaAcesso() {
         return senhaAcesso;
     }
@@ -50,7 +51,7 @@ public class Funcionario {
     @Override
     public String toString() {
         return nome;
+
     }
-    
-    
+
 }

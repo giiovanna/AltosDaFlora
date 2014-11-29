@@ -1,11 +1,11 @@
-package br.com.giovanna.trabalhoFinalGiovannaFranco.modelo;
+package br.com.giovanna.trabalhoFinalGiovannaFranco.apresentacao;
 
-
+import br.com.giovanna.trabalhoFinalGiovannaFranco.modelo.Hospede;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
-/*public class TableModelHospede extends AbstractTableModel {
+public class TableModelHospede extends AbstractTableModel {
     private String[] nomeColunas = {"Código", "Nome", "CPF","Data de nascimento"};    
     private List<Hospede> hospedesCadastrados;    
     
@@ -18,8 +18,13 @@ import javax.swing.table.AbstractTableModel;
         hospedesCadastrados.addAll(listaHospede);
     } 
     
+    @Override
+    public String getColumnName(int column) {
+        return nomeColunas[column];
+    }
+      
     public int retornarCodigoHospede(int linha){
-        return hospedesCadastrados.get(linha).getCodHospede();
+        return hospedesCadastrados.get(linha).getId();
     } 
  
      public Hospede retornarObjetoSelecionado(int linha){
@@ -36,29 +41,32 @@ import javax.swing.table.AbstractTableModel;
     }
     
     @Override
-    public String getColumnName(int column) {
-        return nomeColunas[column];
-    }    
-
-    /*@Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Hospede hospede = hospedesCadastrados.get(rowIndex);
         
         switch(columnIndex){
             case 0:
-                return hospede.getCodHospede();
+                return hospede.getId();
             case 1:
-                return hospede.getNomeCompleto();
+                return hospede.getNome();
             case 2:
-                return hospede.getCpf();
+                return hospede.getRg();
             case 3:
                 return hospede.getDataNasc();
             default:
                 throw new UnsupportedOperationException("Operação Sem Suporte");
         }
-    }  
+    } 
+    
+    public List<Hospede> getRows(){
+        return hospedesCadastrados;
+    }
 
+    public void removeRow(int index) {
+        hospedesCadastrados.remove(index);
+        fireTableRowsDeleted(index, index);
+    }
     
 
-}*/
+}
 
