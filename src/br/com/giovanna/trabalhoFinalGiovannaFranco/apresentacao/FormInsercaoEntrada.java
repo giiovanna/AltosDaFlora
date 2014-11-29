@@ -20,7 +20,8 @@ public class FormInsercaoEntrada extends javax.swing.JFrame {
     private List<Acompanhante> acompanhantes;
     private int adulto;
     private int crianca;
-    TableModelAcompanhante modeloAcompanhante;
+    private TableModelAcompanhante modeloAcompanhante;
+    private Reserva reserva;
 
     public FormInsercaoEntrada() {
         initComponents();
@@ -62,7 +63,7 @@ public class FormInsercaoEntrada extends javax.swing.JFrame {
         btnCancelar = new javax.swing.JButton();
         btnInserirPorReserva = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBorder(new javax.swing.border.MatteBorder(null));
 
@@ -303,51 +304,26 @@ public class FormInsercaoEntrada extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExcluirAcompanhanteActionPerformed
 
     private void btnInserirPorReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirPorReservaActionPerformed
-        String nome = JOptionPane.showInputDialog(this,"Informe o nome do hóspede que fez a reserva:");
-        
-        ReservaDAO dao =new ReservaDAO();
-        Reserva re = dao.buscarPorNome(nome);
-        
-        jdcDataChegada.setDate(re.getDataChegada());
-        jdcDataSaida.setDate(re.getDataSaida());
-        jcbFuncionario.setSelectedItem(re.getFuncionario().getNome());
-        jcbHospede.setSelectedItem(re.getHospede().getNome());
-        
-        carregarAcomodacaoPorTipo(re.getTipoAcomodacao().getId());
-                
-        
+        carregarCampos();
     }//GEN-LAST:event_btnInserirPorReservaActionPerformed
 
-    public static void main(String args[]) {
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormInsercaoEntrada.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormInsercaoEntrada.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormInsercaoEntrada.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormInsercaoEntrada.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FormInsercaoEntrada().setVisible(true);
-            }
-        });
+    public void carregarCampos(){
+        String nome = JOptionPane.showInputDialog(this,"Informe o nome do hóspede que fez a reserva:");
+        
+        ReservaDAO dao = new ReservaDAO();
+        reserva= dao.buscarPorNome(nome);
+        
+        jdcDataChegada.setDate(reserva.getDataChegada());
+        jdcDataSaida.setDate(reserva.getDataSaida());
+        jcbFuncionario.getModel().setSelectedItem(reserva.getFuncionario());
+        jcbHospede.getModel().setSelectedItem(reserva.getHospede());
+        
+        carregarAcomodacaoPorTipo(reserva.getTipoAcomodacao().getId());
+        
+        modeloAcompanhante.addAll(reserva.getAcompanhantes());
+                
     }
-
+   
     private void cadastrar() {
         Entrada et = new Entrada();
 
@@ -368,6 +344,9 @@ public class FormInsercaoEntrada extends javax.swing.JFrame {
 
         try {
             new EntradaDAO().inserir(et);
+            if(reserva != null){
+                new ReservaDAO().excluir(reserva.getId());
+            }
             JOptionPane.showMessageDialog(this, "Entrada foi inserida!", "SUCESSO", 1);
             
         } catch (IllegalArgumentException e) {

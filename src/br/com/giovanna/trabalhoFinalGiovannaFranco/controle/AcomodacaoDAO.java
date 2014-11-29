@@ -140,26 +140,27 @@ public class AcomodacaoDAO implements DAO<Acomodacao> {
         String sql = "SELECT * FROM acomodacao where idTipoAcomodacao =?;";
 
         try (Connection con = new Conexao().criarConexao();
-                PreparedStatement ps = con.prepareStatement(sql);
-                ResultSet rs = ps.executeQuery()) {
+                PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setInt(1, codTipo);
-            acomodacoes = new ArrayList<>();
-            TipoAcomodacao tipoAcomodacao;
+            
+            try(ResultSet rs = ps.executeQuery()){
+                acomodacoes = new ArrayList<>();
+                TipoAcomodacao tipoAcomodacao;
 
-            while (rs.next()) {
-                Acomodacao acomodacao = new Acomodacao();
+                while (rs.next()) {
+                    Acomodacao acomodacao = new Acomodacao();
 
-                acomodacao.setId(rs.getInt("idAcomodacao"));
-                acomodacao.setAndar(rs.getInt("andar"));
-                acomodacao.setNumero(rs.getInt("nroAcomodacao"));
+                    acomodacao.setId(rs.getInt("idAcomodacao"));
+                    acomodacao.setAndar(rs.getInt("andar"));
+                    acomodacao.setNumero(rs.getInt("nroAcomodacao"));
 
-                tipoAcomodacao = new TipoAcomodacaoDAO().buscar(rs.getInt("idTipoAcomodacao"));
-                acomodacao.setTipoAcomodacao(tipoAcomodacao);
+                    tipoAcomodacao = new TipoAcomodacaoDAO().buscar(rs.getInt("idTipoAcomodacao"));
+                    acomodacao.setTipoAcomodacao(tipoAcomodacao);
 
-                acomodacoes.add(acomodacao);
+                    acomodacoes.add(acomodacao);
+                }
             }
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

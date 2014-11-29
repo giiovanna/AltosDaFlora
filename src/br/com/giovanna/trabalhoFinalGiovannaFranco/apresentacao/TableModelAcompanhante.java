@@ -58,6 +58,13 @@ public class TableModelAcompanhante extends AbstractTableModel {
     public List<Acompanhante> getRows(){
         return acompanhantes;
     }
+    
+    public void addAll(List<Acompanhante> listAcompanhante){
+        acompanhantes.removeAll(acompanhantes);
+        acompanhantes.addAll(listAcompanhante);
+         fireTableRowsInserted(0,acompanhantes.size());
+        
+    }
 
     public void removeRow(int index) {
         acompanhantes.remove(index);

@@ -126,7 +126,7 @@ public class ReservaDAO implements DAO<Reserva> {
     
     @Override
     public void excluir(int id) {
-        String sql = "DELETE FROM reserva WHERE idReserva=?;";
+        String sql = "UPDATE reserva SET ativa = 0 WHERE idReserva=?;";
 
         try (Connection con = new Conexao().criarConexao();
                 PreparedStatement ps = con.prepareStatement(sql)) {
@@ -161,13 +161,13 @@ public class ReservaDAO implements DAO<Reserva> {
 
                 reserva.setAcompanhantes(new AcompanhanteDAO().getListaReserva(rs.getInt("idReserva")));
 
-                f = new FuncionarioDAO().buscar(rs.getInt("id"));
+                f = new FuncionarioDAO().buscar(rs.getInt("idFuncionario"));
                 reserva.setFuncionario(f);
 
-                h = new HospedeDAO().buscar(rs.getInt("id"));
+                h = new HospedeDAO().buscar(rs.getInt("idHospede"));
                 reserva.setHospede(h);
                 
-                ta = new TipoAcomodacaoDAO().buscar(rs.getInt("id"));
+                ta = new TipoAcomodacaoDAO().buscar(rs.getInt("idTipoAcomodacao"));
                 reserva.setTipoAcomodacao(ta);
             }
 
@@ -179,36 +179,40 @@ public class ReservaDAO implements DAO<Reserva> {
     
      public Reserva buscarPorNome(String nome) {
         Reserva reserva = null;
-        String sql = "select r.idReserva,r.dataChegada,r.dataSaida,r.taxaMulta,r.idTipoAcomodacao,r.idFuncionario,r.ativa,r.idHospede from reserva as r, hospede as h where r.idHospede = h.idHospede and h.nome = '?';"; 
+        String sql = "select r.idReserva,r.dataChegada,r.dataSaida,r.taxaMulta,r.idTipoAcomodacao,r.idFuncionario,r.ativa,r.idHospede from reserva as r, hospede as h where r.idHospede = h.idHospede and h.nome = ? and r.ativa = 1;"; 
 
         try (Connection con = new Conexao().criarConexao();
-                PreparedStatement ps = con.prepareStatement(sql);
-                ResultSet rs = ps.executeQuery()) {
+                PreparedStatement ps = con.prepareStatement(sql)) {
 
-            Hospede h;
-            TipoAcomodacao ta;
-            Funcionario f;
-
-            while (rs.next()) {
-                ps.setString(1, nome);
-                reserva = new Reserva();
-
-                reserva.setId(rs.getInt("idEntrada"));
-                reserva.setDataChegada(new java.util.Date(rs.getDate("dataChegada").getTime()));
-                reserva.setDataSaida(new java.util.Date(rs.getDate("dataSaida").getTime()));
-                reserva.setTaxaMulta(rs.getInt("taxaMulta"));
-                reserva.setAcompanhantes(new AcompanhanteDAO().getListaReserva(rs.getInt("idReserva")));
-
-                f = new FuncionarioDAO().buscar(rs.getInt("id"));
-                reserva.setFuncionario(f);
-
-                h = new HospedeDAO().buscar(rs.getInt("id"));
-                reserva.setHospede(h);
+            ps.setString(1, nome);
+            
+            try(ResultSet rs  = ps.executeQuery()){
                 
-                ta = new TipoAcomodacaoDAO().buscar(rs.getInt("id"));
-                reserva.setTipoAcomodacao(ta);
-            }
 
+                Hospede h;
+                TipoAcomodacao ta;
+                Funcionario f;
+
+                if (rs.next()) {
+
+                    reserva = new Reserva();
+
+                    reserva.setId(rs.getInt("idReserva"));
+                    reserva.setDataChegada(new java.util.Date(rs.getDate("dataChegada").getTime()));
+                    reserva.setDataSaida(new java.util.Date(rs.getDate("dataSaida").getTime()));
+                    reserva.setTaxaMulta(rs.getInt("taxaMulta"));
+                    reserva.setAcompanhantes(new AcompanhanteDAO().getListaReserva(rs.getInt("idReserva")));
+
+                    f = new FuncionarioDAO().buscar(rs.getInt("idFuncionario"));
+                    reserva.setFuncionario(f);
+
+                    h = new HospedeDAO().buscar(rs.getInt("idHospede"));
+                    reserva.setHospede(h);
+
+                    ta = new TipoAcomodacaoDAO().buscar(rs.getInt("idTipoAcomodacao"));
+                    reserva.setTipoAcomodacao(ta);
+                }
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

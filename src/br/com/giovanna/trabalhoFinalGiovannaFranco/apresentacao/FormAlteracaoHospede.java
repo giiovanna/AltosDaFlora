@@ -5,28 +5,20 @@ import br.com.giovanna.trabalhoFinalGiovannaFranco.modelo.Contato;
 import br.com.giovanna.trabalhoFinalGiovannaFranco.modelo.Endereco;
 import br.com.giovanna.trabalhoFinalGiovannaFranco.modelo.Hospede;
 import java.util.Date;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class FormAlteracaoHospede extends javax.swing.JFrame {
+
     private Hospede h;
     private FormHospede fh;
-    
-    public FormAlteracaoHospede() {
+
+    public FormAlteracaoHospede(FormHospede fh, Hospede hospede) {
         initComponents();
-    }
-    
-    public FormAlteracaoHospede(JFrame form) {
-       this();
-       fh = (FormHospede) form;
+        this.fh = fh;
+        h = hospede;
+        preencherCampos();
     }
 
-    public FormAlteracaoHospede(Hospede hospede) {
-       this();
-       h = hospede;
-       preencherCampos();
-    }
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -64,7 +56,7 @@ public class FormAlteracaoHospede extends javax.swing.JFrame {
         btnVoltar = new javax.swing.JButton();
         jdcDataNascimento = new com.toedter.calendar.JDateChooser();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBorder(new javax.swing.border.MatteBorder(null));
 
@@ -290,51 +282,21 @@ public class FormAlteracaoHospede extends javax.swing.JFrame {
 
     private void btnInserirAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirAlterarActionPerformed
         alterarHospede();
-        this.dispose();
         fh.preencherTabelaHospede();
+        this.dispose();
     }//GEN-LAST:event_btnInserirAlterarActionPerformed
 
-    public static void main(String args[]) {
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormAlteracaoHospede.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormAlteracaoHospede.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormAlteracaoHospede.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormAlteracaoHospede.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FormAlteracaoHospede().setVisible(true);
-            }
-        });
-    }
-    
     private void alterarHospede() {
         String nome;
         String rg;
         Date dataNascimento;
-        
-        Hospede hospede = new Hospede();
+
+        //Hospede hospede = new Hospede();
         HospedeDAO hDAO = new HospedeDAO();
-        
-        Endereco e = new Endereco();
-        Contato c = new Contato();
-        
+
+        Endereco e = h.getEndereco();
+        Contato c = h.getContato();
+
         nome = jtfNome.getText();
         rg = jtfRg.getText();
         dataNascimento = jdcDataNascimento.getDate();
@@ -345,41 +307,41 @@ public class FormAlteracaoHospede extends javax.swing.JFrame {
         e.setLogradouro(jtfLogradouro.getText());
         e.setNumero(Integer.parseInt(jtfNro.getText()));
         e.setUf(jcbUf.getSelectedItem().toString());
-        
+
         c.setCelular(jtfCelular.getText());
         c.setEmail(jtfEmail.getText());
         c.setTelCom(jtfTelCom.getText());
         c.setTelResid(jtfTelRes.getText());
         
-        hospede.setContato(c);
-        hospede.setDataNasc(dataNascimento);
-        hospede.setEndereco(e);
-        hospede.setNome(nome);
-        hospede.setRg(rg);
-        
-        hDAO.alterar(hospede);
+        h.setContato(c);
+        h.setDataNasc(dataNascimento);
+        h.setEndereco(e);
+        h.setNome(nome);
+        h.setRg(rg);
+
+        hDAO.alterar(h);
         JOptionPane.showMessageDialog(null, "Hospede alterado com sucesso!");
     }
 
-    private void preencherCampos(){
-        
-        jdcDataNascimento.setDate(h.getDataNasc());
-        jtfNome.setText(h.getNome());
-        jtfBairro.setText(h.getEndereco().getBairro());
-        jtfCelular.setText(h.getContato().getCelular());
-        jtfCep.setText(h.getEndereco().getCEP());
-        jtfCidade.setText(h.getEndereco().getCidade());
-        jtfCodigo.setText(String.valueOf(h.getId()));
-        jtfEmail.setText(h.getContato().getEmail());
-        jtfLogradouro.setText(h.getEndereco().getLogradouro());
-        jtfNro.setText(String.valueOf(h.getEndereco().getNumero()));
-        jtfRg.setText(h.getRg());
-        jtfTelCom.setText(h.getContato().getTelCom());
-        jtfTelRes.setText(h.getContato().getTelResid());
-        jcbUf.setSelectedItem(h.getEndereco().getUf());
-        
-   }
-    
+    private void preencherCampos() {
+        if (h != null) {
+            jdcDataNascimento.setDate(h.getDataNasc());
+            jtfNome.setText(h.getNome());
+            jtfBairro.setText(h.getEndereco().getBairro());
+            jtfCelular.setText(h.getContato().getCelular());
+            jtfCep.setText(h.getEndereco().getCEP());
+            jtfCidade.setText(h.getEndereco().getCidade());
+            jtfCodigo.setText(String.valueOf(h.getId()));
+            jtfEmail.setText(h.getContato().getEmail());
+            jtfLogradouro.setText(h.getEndereco().getLogradouro());
+            jtfNro.setText(String.valueOf(h.getEndereco().getNumero()));
+            jtfRg.setText(h.getRg());
+            jtfTelCom.setText(h.getContato().getTelCom());
+            jtfTelRes.setText(h.getContato().getTelResid());
+            jcbUf.setSelectedItem(h.getEndereco().getUf());
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnInserirAlterar;
     private javax.swing.JButton btnVoltar;

@@ -12,6 +12,15 @@ public class Reserva {
     private Hospede hospede;
     private Funcionario funcionario;
     private List<Acompanhante> acompanhantes;
+    private boolean ativa;
+
+    public boolean isAtiva() {
+        return ativa;
+    }
+
+    public void setAtiva(boolean ativa) {
+        this.ativa = ativa;
+    }
 
     public int getId() {
         return id;
