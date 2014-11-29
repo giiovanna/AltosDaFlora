@@ -16,7 +16,7 @@ public class EnderecoDAO implements DAO<Endereco> {
 
     @Override
     public int inserir(Endereco e) {
-        String sql = "INSERT INTO Endereco (logradouro,bairro,numero,cidade,uf,cep)"+
+        String sql = "INSERT INTO endereco (logradouro,bairro,numero,cidade,uf,cep)"+
                      "VALUES (?,?,?,?,?,?);";
         
         try (Connection con = new Conexao().criarConexao();
@@ -48,7 +48,7 @@ public class EnderecoDAO implements DAO<Endereco> {
 
     @Override
     public void alterar(Endereco e) {
-        String sql = "UPDATE Endereco SET logradouro=?,bairro=?,numero=?,cidade=?,uf=?,cep=? WHERE idEndereco=?;";
+        String sql = "UPDATE endereco SET logradouro=?,bairro=?,numero=?,cidade=?,uf=?,cep=? WHERE idEndereco=?;";
         
         try (Connection con = new Conexao().criarConexao();
                 PreparedStatement ps = con.prepareStatement(sql)) {
@@ -70,7 +70,7 @@ public class EnderecoDAO implements DAO<Endereco> {
 
     @Override
     public void excluir(int id) {
-        String sql = "DELETE FROM Endereco WHERE idEndereco=?;";
+        String sql = "DELETE FROM endereco WHERE idEndereco=?;";
         
         try (Connection con = new Conexao().criarConexao();
                 PreparedStatement ps = con.prepareStatement(sql)) {
@@ -85,7 +85,7 @@ public class EnderecoDAO implements DAO<Endereco> {
     @Override
     public List<Endereco> listarTodos() {
        List<Endereco> enderecos = null;
-       String sql = "SELECT * FROM Endereco;";
+       String sql = "SELECT * FROM endereco;";
        
        try (Connection con = new Conexao().criarConexao();
             PreparedStatement ps = con.prepareStatement(sql);
@@ -116,7 +116,7 @@ public class EnderecoDAO implements DAO<Endereco> {
     @Override
     public Endereco buscar(int id) {
         Endereco endereco = null;
-        String sql = "SELECT * FROM Endereco WHERE idEndereco=?;";
+        String sql = "SELECT * FROM endereco WHERE idEndereco=?;";
 
         try (Connection con = new Conexao().criarConexao();
                 PreparedStatement ps = con.prepareStatement(sql)) {

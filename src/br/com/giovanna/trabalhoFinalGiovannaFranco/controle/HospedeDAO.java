@@ -18,7 +18,7 @@ public class HospedeDAO implements DAO<Hospede> {
 
     @Override
     public int inserir(Hospede h) {
-        String sql = "INSERT INTO Hospede (nome,rg,dataNascimento,idContato,idEndereco)"
+        String sql = "INSERT INTO hospede (nome,rg,dataNascimento,idContato,idEndereco)"
                 + "VALUES (?,?,?,?,?);";
 
         EnderecoDAO eDAO = new EnderecoDAO();
@@ -54,7 +54,7 @@ public class HospedeDAO implements DAO<Hospede> {
 
     @Override
     public void alterar(Hospede h) {
-        String sql = "UPDATE Hospede SET nome=?,rg=?,dataNascimento=? WHERE idHospede=?;";
+        String sql = "UPDATE hospede SET nome=?,rg=?,dataNascimento=? WHERE idHospede=?;";
 
         EnderecoDAO eDAO = new EnderecoDAO();
         ContatoDAO cDAO = new ContatoDAO();
@@ -78,7 +78,7 @@ public class HospedeDAO implements DAO<Hospede> {
 
     @Override
     public void excluir(int id) {
-        String sql = "DELETE FROM Hospede WHERE idHospede=?;";
+        String sql = "DELETE FROM hospede WHERE idHospede=?;";
 
         try (Connection con = new Conexao().criarConexao();
                 PreparedStatement ps = con.prepareStatement(sql)) {
@@ -133,7 +133,7 @@ public class HospedeDAO implements DAO<Hospede> {
     @Override
     public Hospede buscar(int id) {
         Hospede hospede = null;
-        String sql = "SELECT * FROM Hospede WHERE idHospede=?;";
+        String sql = "SELECT * FROM hospede WHERE idHospede=?;";
         
         EnderecoDAO eDAO = new EnderecoDAO();
         ContatoDAO cDAO = new ContatoDAO();
@@ -173,7 +173,7 @@ public class HospedeDAO implements DAO<Hospede> {
     
     public List<Hospede> listarAtivos() {
         List<Hospede> hospedes = null;
-        String sql = "SELECT * FROM Hospede where ativo = 1;";
+        String sql = "SELECT * FROM hospede where ativo = 1;";
         
         EnderecoDAO eDAO = new EnderecoDAO();
         ContatoDAO cDAO = new ContatoDAO();

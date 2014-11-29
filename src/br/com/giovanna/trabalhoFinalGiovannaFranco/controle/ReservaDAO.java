@@ -2,7 +2,6 @@ package br.com.giovanna.trabalhoFinalGiovannaFranco.controle;
 
 import br.com.giovanna.trabalhoFinalGiovannaFranco.DAO.DAO;
 import br.com.giovanna.trabalhoFinalGiovannaFranco.fabrica.Conexao;
-import br.com.giovanna.trabalhoFinalGiovannaFranco.modelo.Acomodacao;
 import br.com.giovanna.trabalhoFinalGiovannaFranco.modelo.Acompanhante;
 import br.com.giovanna.trabalhoFinalGiovannaFranco.modelo.Funcionario;
 import br.com.giovanna.trabalhoFinalGiovannaFranco.modelo.Hospede;
