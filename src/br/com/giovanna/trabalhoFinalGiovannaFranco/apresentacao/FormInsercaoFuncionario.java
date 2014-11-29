@@ -37,7 +37,6 @@ public class FormInsercaoFuncionario extends javax.swing.JFrame {
         jsnNivel = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setEnabled(false);
 
         jPanel1.setBorder(new javax.swing.border.MatteBorder(null));
 

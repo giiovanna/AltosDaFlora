@@ -180,6 +180,7 @@ public class FormHospede extends javax.swing.JFrame {
     }
     
     private void exibirTelaHospede() {
+//        new FormAlteracaoHospede(this, hospede).setVisible(true);
         new FormInsercaoHospede(this).setVisible(true);
     }
     

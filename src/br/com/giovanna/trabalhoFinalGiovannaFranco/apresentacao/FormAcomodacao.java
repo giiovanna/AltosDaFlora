@@ -35,7 +35,7 @@ public class FormAcomodacao extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jcbTipoAcomodacao = new javax.swing.JComboBox();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBorder(new javax.swing.border.MatteBorder(null));
 

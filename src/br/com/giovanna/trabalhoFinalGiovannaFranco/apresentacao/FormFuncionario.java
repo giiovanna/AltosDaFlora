@@ -50,7 +50,7 @@ public class FormFuncionario extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jtFuncionario);
 
-        btnInserir.setText("Inserir novo hóspede");
+        btnInserir.setText("Inserir novo Funcionário");
         btnInserir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInserirActionPerformed(evt);

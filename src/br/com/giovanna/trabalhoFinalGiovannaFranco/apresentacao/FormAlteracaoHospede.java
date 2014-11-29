@@ -291,7 +291,6 @@ public class FormAlteracaoHospede extends javax.swing.JFrame {
         String rg;
         Date dataNascimento;
 
-        //Hospede hospede = new Hospede();
         HospedeDAO hDAO = new HospedeDAO();
 
         Endereco e = h.getEndereco();

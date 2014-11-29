@@ -93,7 +93,7 @@ public class HospedeDAO implements DAO<Hospede> {
     @Override
     public List<Hospede> listarTodos() {
         List<Hospede> hospedes = null;
-        String sql = "SELECT * FROM Hospede;";
+        String sql = "SELECT * FROM hospede;";
         
         EnderecoDAO eDAO = new EnderecoDAO();
         ContatoDAO cDAO = new ContatoDAO();

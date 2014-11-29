@@ -9,20 +9,15 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class FormInsercaoHospede extends javax.swing.JFrame {
+
     private Hospede h;
     private FormHospede fh;
-    
-    public FormInsercaoHospede() {
+
+    public FormInsercaoHospede(FormHospede fh) {
         initComponents();
+        this.fh = fh;
     }
-    
-    public FormInsercaoHospede(JFrame form) {
-       this();
-      
-       fh = (FormHospede) form;
-       
-    }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -61,7 +56,6 @@ public class FormInsercaoHospede extends javax.swing.JFrame {
         jdcDataNascimento = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setEnabled(false);
 
         jPanel1.setBorder(new javax.swing.border.MatteBorder(null));
 
@@ -286,48 +280,48 @@ public class FormInsercaoHospede extends javax.swing.JFrame {
 
     private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
         inserirHospede();
-        this.dispose();
         fh.preencherTabelaHospede();
+        this.dispose();
     }//GEN-LAST:event_btnInserirActionPerformed
- 
+
     private void inserirHospede() {
         String nome;
         String rg;
         Date dataNascimento;
-        
+
         Hospede hospede = new Hospede();
         HospedeDAO hDAO = new HospedeDAO();
-        
+
         Endereco e = new Endereco();
         Contato c = new Contato();
-        
+
         nome = jtfNome.getText();
         rg = jtfRg.getText();
         dataNascimento = jdcDataNascimento.getDate();
-        
+
         e.setBairro(jtfBairro.getText());
         e.setCEP(jtfCep.getText());
         e.setCidade(jtfCidade.getText());
         e.setLogradouro(jtfLogradouro.getText());
         e.setNumero(Integer.parseInt(jtfNro.getText()));
         e.setUf(jcbUf.getSelectedItem().toString());
-        
+
         c.setCelular(jtfCelular.getText());
         c.setEmail(jtfEmail.getText());
         c.setTelCom(jtfTelCom.getText());
         c.setTelResid(jtfTelRes.getText());
-        
+
         hospede.setContato(c);
         hospede.setDataNasc(dataNascimento);
         hospede.setEndereco(e);
         hospede.setNome(nome);
         hospede.setRg(rg);
-        
+
         hDAO.inserir(hospede);
         JOptionPane.showMessageDialog(null, "Hospede inserido com sucesso!");
     }
-    
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnInserir;
     private javax.swing.JButton btnVoltar;
