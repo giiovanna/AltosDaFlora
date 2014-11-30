@@ -116,6 +116,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Relat&#xf3;rio de ocupa&#xe7;&#xe3;o de acomoda&#xe7;&#xf5;es"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem11ActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem12">
               <Properties>

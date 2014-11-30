@@ -139,6 +139,11 @@ public class FormPrincipal extends javax.swing.JFrame {
         jMenu3.add(jMenuItem10);
 
         jMenuItem11.setText("Relatório de ocupação de acomodações");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem11);
 
         jMenuItem12.setText("Relatório de faturamento periódico");
@@ -210,13 +215,18 @@ public class FormPrincipal extends javax.swing.JFrame {
 
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
-        gerarRelatorio();
+        InputStream arquivo = getClass().getResourceAsStream("/br/com/giovanna/trabalhoFinalGiovannaFranco/relatorios/ListagemHospede.jasper");       
+        gerarRelatorio(arquivo);
     }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        InputStream arquivo = getClass().getResourceAsStream("/br/com/giovanna/trabalhoFinalGiovannaFranco/relatorios/ListagemAcomodacoesVazias.jasper");       
+        gerarRelatorio(arquivo);
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
     
-    public void gerarRelatorio(){
+    public void gerarRelatorio(InputStream arquivo){
         Conexao con = new Conexao();
-        InputStream arquivo = getClass().getResourceAsStream("/br/com/giovanna/tarbalhoFinalGiovannaFranco/relatorios/ListagemHospede.jasper");       
-       
+        
         try{
             if(arquivo != null){
                 JasperPrint print = JasperFillManager.fillReport(arquivo, null, con.criarConexao());

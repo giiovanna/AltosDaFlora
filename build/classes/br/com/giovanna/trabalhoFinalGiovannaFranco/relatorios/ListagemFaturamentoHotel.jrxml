@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7c24787d-f89d-4ee6-8b99-852f7bde359a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     consumo.`idconsumo` AS consumo_idconsumo,
+     consumo.`data` AS consumo_data,
+     consumo.`valor` AS consumo_valor,
+     consumo.`idEntrada` AS consumo_idEntrada,
+     itemconsumo.`iditemConsumo` AS itemconsumo_iditemConsumo,
+     itemconsumo.`descricao` AS itemconsumo_descricao,
+     itemconsumo.`quantidade` AS itemconsumo_quantidade,
+     itemconsumo.`valorUnitario` AS itemconsumo_valorUnitario,
+     itemconsumo.`idCategoria` AS itemconsumo_idCategoria,
+     itemconsumo.`idconsumo` AS itemconsumo_idconsumo,
+     saida.`idSaida` AS saida_idSaida,
+     saida.`data` AS saida_data,
+     saida.`numeroDiarias` AS saida_numeroDiarias,
+     saida.`totalDiarias` AS saida_totalDiarias,
+     saida.`totalConsumo` AS saida_totalConsumo,
+     saida.`idEntrada` AS saida_idEntrada,
+     saida.`tipoPagamento` AS saida_tipoPagamento,
+     entrada.`idEntrada` AS entrada_idEntrada,
+     entrada.`dataChegada` AS entrada_dataChegada,
+     entrada.`dataSaida` AS entrada_dataSaida,
+     entrada.`idAcomodacao` AS entrada_idAcomodacao,
+     entrada.`idHospede` AS entrada_idHospede,
+     entrada.`idFuncionario` AS entrada_idFuncionario,
+     entrada.`ativa` AS entrada_ativa,
+     categoria.`idCategoria` AS categoria_idCategoria,
+     categoria.`descricao` AS categoria_descricao
+FROM
+     `consumo` consumo INNER JOIN `itemconsumo` itemconsumo ON consumo.`idconsumo` = itemconsumo.`idconsumo`
+     INNER JOIN `entrada` entrada ON consumo.`idEntrada` = entrada.`idEntrada`
+     INNER JOIN `saida` saida ON entrada.`idEntrada` = saida.`idEntrada`
+     INNER JOIN `categoria` categoria ON itemconsumo.`idCategoria` = categoria.`idCategoria`]]>
+	</queryString>
+	<field name="consumo_idconsumo" class="java.lang.Integer"/>
+	<field name="consumo_data" class="java.sql.Date"/>
+	<field name="consumo_valor" class="java.math.BigDecimal"/>
+	<field name="consumo_idEntrada" class="java.lang.Integer"/>
+	<field name="itemconsumo_iditemConsumo" class="java.lang.Integer"/>
+	<field name="itemconsumo_descricao" class="java.lang.String"/>
+	<field name="itemconsumo_quantidade" class="java.lang.Integer"/>
+	<field name="itemconsumo_valorUnitario" class="java.math.BigDecimal"/>
+	<field name="itemconsumo_idCategoria" class="java.lang.Integer"/>
+	<field name="itemconsumo_idconsumo" class="java.lang.Integer"/>
+	<field name="saida_idSaida" class="java.lang.Integer"/>
+	<field name="saida_data" class="java.sql.Timestamp"/>
+	<field name="saida_numeroDiarias" class="java.lang.Integer"/>
+	<field name="saida_totalDiarias" class="java.math.BigDecimal"/>
+	<field name="saida_totalConsumo" class="java.math.BigDecimal"/>
+	<field name="saida_idEntrada" class="java.lang.Integer"/>
+	<field name="saida_tipoPagamento" class="java.lang.String"/>
+	<field name="entrada_idEntrada" class="java.lang.Integer"/>
+	<field name="entrada_dataChegada" class="java.sql.Timestamp"/>
+	<field name="entrada_dataSaida" class="java.sql.Timestamp"/>
+	<field name="entrada_idAcomodacao" class="java.lang.Integer"/>
+	<field name="entrada_idHospede" class="java.lang.Integer"/>
+	<field name="entrada_idFuncionario" class="java.lang.Integer"/>
+	<field name="entrada_ativa" class="java.lang.Integer"/>
+	<field name="categoria_idCategoria" class="java.lang.Integer"/>
+	<field name="categoria_descricao" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
