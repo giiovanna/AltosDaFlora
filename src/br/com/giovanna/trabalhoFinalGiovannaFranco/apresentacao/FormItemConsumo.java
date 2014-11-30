@@ -155,8 +155,6 @@ public class FormItemConsumo extends javax.swing.JFrame {
         item.setValorUnitario(valor);
         item.setCategoria(categoria);
         
-        new ItemConsumoDAO().inserir(item);
-        
         form.inserirItem(item);
         
         this.dispose();
