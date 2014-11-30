@@ -34,8 +34,6 @@ public class FormSaida extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         btnRealizarSaida = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        btnAlterar = new javax.swing.JButton();
-        btnExcluir = new javax.swing.JButton();
         jtfValorTotalConsumo = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -67,15 +65,6 @@ public class FormSaida extends javax.swing.JFrame {
         });
 
         btnCancelar.setText("Cancelar");
-
-        btnAlterar.setText("Alterar");
-
-        btnExcluir.setText("Excluir");
-        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExcluirActionPerformed(evt);
-            }
-        });
 
         jtfValorTotalConsumo.setEditable(false);
 
@@ -132,10 +121,7 @@ public class FormSaida extends javax.swing.JFrame {
                             .addComponent(jLabel1))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnExcluir)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAlterar)
-                        .addGap(96, 96, 96)
+                        .addGap(230, 230, 230)
                         .addComponent(btnRealizarSaida)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCancelar)))
@@ -172,8 +158,6 @@ public class FormSaida extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnRealizarSaida)
-                            .addComponent(btnAlterar)
-                            .addComponent(btnExcluir)
                             .addComponent(btnCancelar))
                         .addGap(26, 26, 26))))
         );
@@ -201,10 +185,6 @@ public class FormSaida extends javax.swing.JFrame {
     private void btnRealizarSaidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRealizarSaidaActionPerformed
         cadastrar();
     }//GEN-LAST:event_btnRealizarSaidaActionPerformed
-
-    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void jcbCodEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbCodEntradaActionPerformed
         preencherCamposEntradaSelecionada();
@@ -266,9 +246,7 @@ public class FormSaida extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnRealizarSaida;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

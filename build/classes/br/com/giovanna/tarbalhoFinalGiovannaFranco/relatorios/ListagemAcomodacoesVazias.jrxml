@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="40c1b316-fca8-4b0d-a950-522ed366e096">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[select a.idAcomodacao,a.nroAcomodacao,a.andar from acomodacao as a
+where a.disponivel = 1 ;]]>
+	</queryString>
+	<field name="idAcomodacao" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nroAcomodacao" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="andar" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="190" y="24" width="190" height="30" uuid="300af43e-e4f2-409f-b182-53caf556749b"/>
+				<textElement textAlignment="Justified">
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Acomodações vazias]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="90" y="41" width="100" height="20" uuid="05180e5f-9421-403b-9449-c6d47e9eca33"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Número do quarto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="341" y="41" width="100" height="20" uuid="95cd75ae-3a72-419b-9095-e6330f2a58e6"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Andar]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="90" y="0" width="100" height="20" uuid="883192be-f77a-455c-8297-811e7edbf04a"/>
+				<textFieldExpression><![CDATA[$F{nroAcomodacao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="341" y="0" width="100" height="20" uuid="dee02555-ff71-40d9-82f1-06107179ec8a"/>
+				<textFieldExpression><![CDATA[$F{andar}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="536" y="34" width="19" height="20" uuid="8ce908ba-74ef-43a4-99e1-434780058a5f"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

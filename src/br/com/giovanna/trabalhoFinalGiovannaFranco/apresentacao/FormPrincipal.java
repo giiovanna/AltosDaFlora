@@ -1,5 +1,14 @@
 package br.com.giovanna.trabalhoFinalGiovannaFranco.apresentacao;
 
+import br.com.giovanna.trabalhoFinalGiovannaFranco.fabrica.Conexao;
+import java.io.InputStream;
+import java.util.HashMap;
+import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
+
 public class FormPrincipal extends javax.swing.JFrame {
     
     public FormPrincipal() {
@@ -115,6 +124,11 @@ public class FormPrincipal extends javax.swing.JFrame {
         jMenu3.setText("Relatórios");
 
         jMenuItem10.setText("Relatório de hóspede");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem10);
 
         jMenuItem11.setText("Relatório de ocupação de acomodações");
@@ -187,6 +201,10 @@ public class FormPrincipal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        gerarRelatorio();
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -215,6 +233,22 @@ public class FormPrincipal extends javax.swing.JFrame {
                 new FormPrincipal().setVisible(true);
             }
         });
+    }
+    
+    public void gerarRelatorio(){
+        Conexao con = new Conexao();
+        InputStream arquivo = getClass().getResourceAsStream("/br/com/giovanna/tarbalhoFinalGiovannaFranco/relatorios/ListagemHospede.jasper");       
+       
+        try{
+            if(arquivo != null){
+                JasperPrint print = JasperFillManager.fillReport(arquivo, null, con.criarConexao());
+                JasperViewer.viewReport(print, false);     
+            }else{
+                JOptionPane.showMessageDialog(this,"Não foi possivel gerar relatório","ERRO",JOptionPane.ERROR_MESSAGE);
+            }
+        } catch(JRException jre){
+            throw new RuntimeException(jre);
+        } 
     }
 
     

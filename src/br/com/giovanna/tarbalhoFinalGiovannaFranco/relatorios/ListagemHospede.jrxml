@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d261751d-603e-4f71-a4df-d040b2967675">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Giovanna\\Documents\\ADS\\4Modulo\\DSIS\\Trabalho Final\\TrabalhoFinalGiovannaFranco\\src\\br\\com\\giovanna\\tarbalhoFinalGiovannaFranco\\relatorios\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select h.nome,e.dataChegada, e.dataSaida ,ac.nroAcomodacao 
+from hospede as h, entrada as e, acomodacao as ac
+where h.idHospede = e.idHospede and ac.idAcomodacao = e.idAcomodacao;]]>
+	</queryString>
+	<field name="nome" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dataChegada" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dataSaida" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nroAcomodacao" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="79" y="30" width="417" height="38" uuid="5b559825-faf4-4f63-a5fe-06484e64bd0f"/>
+				<textElement textAlignment="Center">
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Listagem de hóspedes e acompanhantes]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="2" y="41" width="100" height="20" uuid="afcb1c28-020e-4573-878e-2bd0cb22979d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hóspede]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="152" y="41" width="100" height="20" uuid="3936b378-dcc9-4ae3-8445-78d49a7d7125"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data de entrada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="322" y="41" width="100" height="20" uuid="f93d8f6c-fc00-4148-a7ef-5b00127adb40"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data de saída]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="475" y="41" width="80" height="20" uuid="38873b76-6075-47f0-b60f-bfcfe8713d69"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Quarto]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="89" splitType="Stretch">
+			<textField>
+				<reportElement x="2" y="0" width="100" height="20" uuid="d4c99ed0-f693-45ae-bac9-f08deec65775"/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="152" y="0" width="100" height="20" uuid="3e82f814-b4ce-4c61-b600-45cd94d25f6c"/>
+				<textFieldExpression><![CDATA[$F{dataChegada}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="322" y="0" width="100" height="20" uuid="310153f7-c961-4997-bfb4-ef60b892b0c0"/>
+				<textFieldExpression><![CDATA[$F{dataSaida}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="475" y="0" width="80" height="20" uuid="dbc9bb14-5e9c-4bbe-983a-92faf3be770c"/>
+				<textFieldExpression><![CDATA[$F{nroAcomodacao}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="0" y="25" width="553" height="36" uuid="a827ca88-5ae9-4805-85e7-e95c8ec7ae97"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "ListagemHospede_subreportAcompanhantes.jasper"]]></subreportExpression>
+			</subreport>
+			<line>
+				<reportElement x="4" y="-23" width="548" height="1" uuid="d6c829c7-5671-436d-a50c-bf5e979bb64d"/>
+			</line>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="535" y="34" width="18" height="20" uuid="aa35ddfd-51cf-43c7-8216-9f12558015a9"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
