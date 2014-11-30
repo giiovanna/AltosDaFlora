@@ -169,6 +169,7 @@ public class FormLogin extends javax.swing.JFrame {
         
         if (funcionario != null && dao.comparaSenha(funcionario, senhaAcesso)) {
             new FormPrincipal(funcionario).setVisible(true);
+            this.dispose();
         } else {
             JOptionPane.showMessageDialog(null, "Usuário ou senha inválido!", "Erro", JOptionPane.ERROR_MESSAGE);
         }

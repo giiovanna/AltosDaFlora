@@ -176,7 +176,7 @@ public class FormPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiTipoAcomocacaoActionPerformed
 
     private void jmiEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEntradaActionPerformed
-        FormInsercaoEntrada fe = new FormInsercaoEntrada();
+        FormInsercaoEntrada fe = new FormInsercaoEntrada(funcionarioLogado);
         fe.setVisible(true);
     }//GEN-LAST:event_jmiEntradaActionPerformed
 
