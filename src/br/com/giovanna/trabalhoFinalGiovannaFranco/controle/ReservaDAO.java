@@ -2,7 +2,6 @@ package br.com.giovanna.trabalhoFinalGiovannaFranco.controle;
 
 import br.com.giovanna.trabalhoFinalGiovannaFranco.DAO.DAO;
 import br.com.giovanna.trabalhoFinalGiovannaFranco.fabrica.Conexao;
-import br.com.giovanna.trabalhoFinalGiovannaFranco.modelo.Acomodacao;
 import br.com.giovanna.trabalhoFinalGiovannaFranco.modelo.Acompanhante;
 import br.com.giovanna.trabalhoFinalGiovannaFranco.modelo.Funcionario;
 import br.com.giovanna.trabalhoFinalGiovannaFranco.modelo.Hospede;
@@ -126,7 +125,7 @@ public class ReservaDAO implements DAO<Reserva> {
     
     @Override
     public void excluir(int id) {
-        String sql = "UPDATE reserva SET ativa = 0 WHERE idReserva=?;";
+        String sql = "UPDATE reserva SET ativo = 0 WHERE idReserva=?;";
 
         try (Connection con = new Conexao().criarConexao();
                 PreparedStatement ps = con.prepareStatement(sql)) {
@@ -179,7 +178,7 @@ public class ReservaDAO implements DAO<Reserva> {
     
      public Reserva buscarPorNome(String nome) {
         Reserva reserva = null;
-        String sql = "select r.idReserva,r.dataChegada,r.dataSaida,r.taxaMulta,r.idTipoAcomodacao,r.idFuncionario,r.ativa,r.idHospede from reserva as r, hospede as h where r.idHospede = h.idHospede and h.nome = ? and r.ativa = 1;"; 
+        String sql = "select r.idReserva,r.dataChegada,r.dataSaida,r.taxaMulta,r.idTipoAcomodacao,r.idFuncionario,r.ativo,r.idHospede from reserva as r, hospede as h where r.idHospede = h.idHospede and h.nome = ? and r.ativo = 1;"; 
 
         try (Connection con = new Conexao().criarConexao();
                 PreparedStatement ps = con.prepareStatement(sql)) {

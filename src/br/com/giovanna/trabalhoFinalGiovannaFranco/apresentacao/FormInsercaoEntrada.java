@@ -22,18 +22,20 @@ public class FormInsercaoEntrada extends javax.swing.JFrame {
     private int crianca;
     private TableModelAcompanhante modeloAcompanhante;
     private Reserva reserva;
+    private Funcionario funcionarioLogado;
 
-    public FormInsercaoEntrada() {
+    public FormInsercaoEntrada(Funcionario funcionario) {
         initComponents();
         carregarAcomodacao();
-        carregarFuncionario();
         carregarHospede();
         instanciarTabelaAcompanhante();
+        
         jdcDataChegada.setDate(new Date());
-       
         acompanhantes = new ArrayList<>();
         adulto = 1;
         crianca = 0;
+        funcionarioLogado = funcionario;
+        jtfFuncionario.setText(funcionarioLogado.getNome());
     }
 
     @SuppressWarnings("unchecked")
@@ -50,7 +52,6 @@ public class FormInsercaoEntrada extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jcbAcomodacao = new javax.swing.JComboBox();
-        jcbFuncionario = new javax.swing.JComboBox();
         jPanel2 = new javax.swing.JPanel();
         jcbHospede = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
@@ -62,6 +63,7 @@ public class FormInsercaoEntrada extends javax.swing.JFrame {
         btnInserir = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnInserirPorReserva = new javax.swing.JButton();
+        jtfFuncionario = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -83,8 +85,6 @@ public class FormInsercaoEntrada extends javax.swing.JFrame {
         jLabel6.setText("Funcionário:");
 
         jcbAcomodacao.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
-
-        jcbFuncionario.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Informações do hóspede"));
 
@@ -142,7 +142,7 @@ public class FormInsercaoEntrada extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnAdicionarAcompanhante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnExcluirAcompanhante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -173,7 +173,7 @@ public class FormInsercaoEntrada extends javax.swing.JFrame {
             }
         });
 
-        btnCancelar.setText("Cancelar");
+        btnCancelar.setText("Voltar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -186,6 +186,8 @@ public class FormInsercaoEntrada extends javax.swing.JFrame {
                 btnInserirPorReservaActionPerformed(evt);
             }
         });
+
+        jtfFuncionario.setEditable(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -214,11 +216,11 @@ public class FormInsercaoEntrada extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel4)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jdcDataSaida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(jdcDataSaida, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel6)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jcbFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addComponent(jtfFuncionario)))))
                         .addGap(0, 60, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(btnInserirPorReserva)
@@ -249,10 +251,10 @@ public class FormInsercaoEntrada extends javax.swing.JFrame {
                             .addComponent(jLabel5)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel6)
-                                .addComponent(jcbFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jtfFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(jcbAcomodacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 222, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 228, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnInserir)
@@ -315,7 +317,7 @@ public class FormInsercaoEntrada extends javax.swing.JFrame {
         
         jdcDataChegada.setDate(reserva.getDataChegada());
         jdcDataSaida.setDate(reserva.getDataSaida());
-        jcbFuncionario.getModel().setSelectedItem(reserva.getFuncionario());
+        jtfFuncionario.setText(funcionarioLogado.getNome());
         jcbHospede.getModel().setSelectedItem(reserva.getHospede());
         
         carregarAcomodacaoPorTipo(reserva.getTipoAcomodacao().getId());
@@ -326,18 +328,16 @@ public class FormInsercaoEntrada extends javax.swing.JFrame {
    
     private void cadastrar() {
         Entrada et = new Entrada();
-
         Acomodacao a = (Acomodacao) jcbAcomodacao.getSelectedItem();
         
         a.setDisponivel(false);
         
-        Funcionario f = (Funcionario) jcbFuncionario.getSelectedItem();
         Hospede h = (Hospede) jcbHospede.getSelectedItem();
 
         et.setDataChegada(jdcDataChegada.getDate());
         et.setDataSaida(jdcDataSaida.getDate());
         et.setAcomodacao(a);
-        et.setFuncionario(f);
+        et.setFuncionario(funcionarioLogado);
         et.setHospede(h);
         et.setAcompanhantes(acompanhantes);
         
@@ -346,9 +346,10 @@ public class FormInsercaoEntrada extends javax.swing.JFrame {
             new EntradaDAO().inserir(et);
             if(reserva != null){
                 new ReservaDAO().excluir(reserva.getId());
+                reserva = null;
             }
             JOptionPane.showMessageDialog(this, "Entrada foi inserida!", "SUCESSO", 1);
-            
+            carregarAcomodacao();
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(this, "Entrada não foi inserida!", "ERRO", 1);
             throw new IllegalArgumentException(e);
@@ -363,7 +364,7 @@ public class FormInsercaoEntrada extends javax.swing.JFrame {
         
         jdcDataChegada.setDate(re.getDataChegada());
         jdcDataSaida.setDate(re.getDataSaida());
-        jcbFuncionario.setSelectedItem(re.getFuncionario().getNome());
+        jtfFuncionario.setText(funcionarioLogado.getNome());
         jcbHospede.setSelectedItem(re.getHospede().getNome());
         
         carregarAcomodacaoPorTipo(re.getTipoAcomodacao().getId());           
@@ -371,9 +372,10 @@ public class FormInsercaoEntrada extends javax.swing.JFrame {
     }
 
     private void carregarAcomodacao() {
-        List<Acomodacao> acm = new AcomodacaoDAO().listarTodos();
+        List<Acomodacao> acm = new AcomodacaoDAO().listarDisponiveis();
 
         jcbAcomodacao.removeAllItems();
+        jcbAcomodacao.addItem("Selecione acomodação");
         for (Acomodacao a : acm) {
             jcbAcomodacao.addItem(a);
         }
@@ -383,24 +385,17 @@ public class FormInsercaoEntrada extends javax.swing.JFrame {
         List<Acomodacao> acm = new AcomodacaoDAO().buscarPorTipoAcomodacao(cod);
 
         jcbAcomodacao.removeAllItems();
+        jcbAcomodacao.addItem("Selecione acomodação");
         for (Acomodacao a : acm) {
             jcbAcomodacao.addItem(a);
         }
     }
 
-    private void carregarFuncionario() {
-        List<Funcionario> func = new FuncionarioDAO().listarTodos();
-
-        jcbFuncionario.removeAllItems();
-        for (Funcionario f : func) {
-            jcbFuncionario.addItem(f);
-        }
-    }
-
     private void carregarHospede() {
         List<Hospede> hospede = new HospedeDAO().listarTodos();
-
+        
         jcbHospede.removeAllItems();
+        jcbHospede.addItem("Selecione hóspede");
         for (Hospede h : hospede) {
             jcbHospede.addItem(h);
         }
@@ -484,12 +479,12 @@ public class FormInsercaoEntrada extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JComboBox jcbAcomodacao;
-    private javax.swing.JComboBox jcbFuncionario;
     private javax.swing.JComboBox jcbHospede;
     private com.toedter.calendar.JDateChooser jdcDataChegada;
     private com.toedter.calendar.JDateChooser jdcDataSaida;
     private javax.swing.JTable jtAcompanhante;
     private javax.swing.JTextField jtfCodigo;
+    private javax.swing.JTextField jtfFuncionario;
     // End of variables declaration//GEN-END:variables
 
     

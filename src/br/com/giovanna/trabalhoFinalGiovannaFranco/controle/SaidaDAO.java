@@ -17,7 +17,7 @@ public class SaidaDAO implements DAO<Saida> {
 
     @Override
     public int inserir(Saida s) {
-        String sql = "INSERT INTO saida (data,numeroDiarias,totalDiarias,totalConsumo,idEntrada) VALUES (?,?,?,?,?);";
+        String sql = "INSERT INTO saida (data,numeroDiarias,totalDiarias,totalConsumo,idEntrada,tipoPagamento) VALUES (?,?,?,?,?,?);";
 
         try (Connection con = new Conexao().criarConexao();
                 PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -27,6 +27,7 @@ public class SaidaDAO implements DAO<Saida> {
             ps.setDouble(3, s.getTotalDiarias());
             ps.setDouble(4, s.getTotalConsumo());
             ps.setInt(5, s.getEntrada().getId());
+            ps.setString(6,s.getTipoPagamento());
 
             ps.executeUpdate();
 
@@ -37,7 +38,10 @@ public class SaidaDAO implements DAO<Saida> {
                     id = rs.getInt(1);
                 }
             }
-
+            new EntradaDAO().excluir(s.getEntrada().getId());
+            s.getEntrada().getAcomodacao().setDisponivel(true);
+            new AcomodacaoDAO().alterar(s.getEntrada().getAcomodacao());
+            
             return id;
 
         } catch (SQLException e) {
@@ -47,7 +51,7 @@ public class SaidaDAO implements DAO<Saida> {
 
     @Override
     public void alterar(Saida s) {
-        String sql = "UPDATE saida SET data=?,numeroDiarias=?,totalDiarias=?,totalConsumo=?,idEntrada=? WHERE idSaida=?;";
+        String sql = "UPDATE saida SET data=?,numeroDiarias=?,totalDiarias=?,totalConsumo=?,idEntrada=?,tipoPagamento=? WHERE idSaida=?;";
 
         try (Connection con = new Conexao().criarConexao();
                 PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -57,7 +61,8 @@ public class SaidaDAO implements DAO<Saida> {
             ps.setDouble(3, s.getTotalDiarias());
             ps.setDouble(4, s.getTotalConsumo());
             ps.setInt(5, s.getEntrada().getId());
-            ps.setInt(6, s.getId());
+            ps.setString(6,s.getTipoPagamento());
+            ps.setInt(7, s.getId());
 
             ps.executeUpdate();
 
@@ -130,6 +135,7 @@ public class SaidaDAO implements DAO<Saida> {
                     saida.setTotalConsumo(rs.getInt("totalConsumo"));
                     saida.setTotalDiarias(rs.getInt("totalDiarias"));
                     saida.setData(new java.util.Date(rs.getDate("data").getTime()));
+                    saida.setTipoPagamento(rs.getString("tipoPagamento"));
 
                     e = new EntradaDAO().buscar(rs.getInt("idEntrada"));
                     saida.setEntrada(e);

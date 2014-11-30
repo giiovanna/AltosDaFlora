@@ -40,6 +40,7 @@ public class FormConsumo extends javax.swing.JFrame {
         btnAddItem = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         btnInserirConsumo = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -52,6 +53,8 @@ public class FormConsumo extends javax.swing.JFrame {
         jLabel3.setText("Valor:");
 
         jLabel4.setText("Código da entrada:");
+
+        jtfCodigo.setEditable(false);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
 
@@ -133,6 +136,13 @@ public class FormConsumo extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Voltar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -156,7 +166,9 @@ public class FormConsumo extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnInserirConsumo)))
+                        .addComponent(btnInserirConsumo)
+                        .addGap(193, 193, 193)
+                        .addComponent(jButton1)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -181,7 +193,9 @@ public class FormConsumo extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnInserirConsumo)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnInserirConsumo)
+                    .addComponent(jButton1))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
@@ -217,6 +231,10 @@ public class FormConsumo extends javax.swing.JFrame {
         excluirItemConsumoTabela();
     }//GEN-LAST:event_btnExcluirActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     private void instanciarTabelaItens(){
         tabelaItem = new TableModelitemConsumo();
         tableItens.setModel(tabelaItem);
@@ -226,7 +244,7 @@ public class FormConsumo extends javax.swing.JFrame {
         List<Entrada> entradas = new EntradaDAO().listarTodos();
         
         jComboBox1.removeAllItems();
-        
+        jComboBox1.addItem("Selecione entrada");
         for (Entrada e : entradas) {
             jComboBox1.addItem(e);
         }
@@ -282,6 +300,7 @@ public class FormConsumo extends javax.swing.JFrame {
     private javax.swing.JButton btnAddItem;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnInserirConsumo;
+    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

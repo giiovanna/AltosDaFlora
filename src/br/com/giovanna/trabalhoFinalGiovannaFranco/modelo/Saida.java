@@ -9,7 +9,16 @@ public class Saida {
     private double totalDiarias;
     private double totalConsumo;
     private Entrada entrada;
+    private String tipoPagamento;
 
+    public void setTipoPagamento(String tipoPagamento) {
+        this.tipoPagamento = tipoPagamento;
+    }
+
+    public String getTipoPagamento() {
+        return tipoPagamento;
+    }
+   
     public int getId() {
         return id;
     }

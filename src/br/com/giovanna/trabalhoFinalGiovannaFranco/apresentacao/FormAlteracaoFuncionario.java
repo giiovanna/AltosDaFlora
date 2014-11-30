@@ -9,17 +9,9 @@ public class FormAlteracaoFuncionario extends javax.swing.JFrame {
     private FormFuncionario ff;
     private Funcionario funcionario;
     
-    public FormAlteracaoFuncionario() {
+    public FormAlteracaoFuncionario(JFrame form,Funcionario func) {
         initComponents();
-    }
-
-    public FormAlteracaoFuncionario(JFrame form) {
-        this();
         this.ff = (FormFuncionario) form;
-    }
-
-    public FormAlteracaoFuncionario(Funcionario func) {
-        this();
         funcionario = func;
         preencherCampos();
     }
@@ -166,15 +158,13 @@ public class FormAlteracaoFuncionario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInserirActionPerformed
 
     private void alterar(){
-        Funcionario f = new Funcionario();
-        
-        f.setNome(jtfNome.getText());
-        f.setNomeAcesso(jtfNomeAcesso.getText());
-        f.setSenhaAcesso(new String(jpfSenhaAcesso.getPassword()));
-        f.setNivelAcesso((int)jsnNivel.getValue());
+        funcionario.setNome(jtfNome.getText());
+        funcionario.setNomeAcesso(jtfNomeAcesso.getText());
+        funcionario.setSenhaAcesso(new String(jpfSenhaAcesso.getPassword()));
+        funcionario.setNivelAcesso((int)jsnNivel.getValue());
             
         try{
-            new FuncionarioDAO().alterar(f);
+            new FuncionarioDAO().alterar(funcionario);
             JOptionPane.showMessageDialog(this,"Funcionário foi alterado!","SUCESSO", 1);
                         
         }catch(IllegalArgumentException e){

@@ -6,9 +6,10 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class FormFuncionario extends javax.swing.JFrame {
+
     TableModelFuncionario modelotabelaFunc;
     Funcionario func;
-    
+
     public FormFuncionario() {
         initComponents();
         instanciarTabelaFuncionario();
@@ -50,7 +51,7 @@ public class FormFuncionario extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jtFuncionario);
 
-        btnInserir.setText("Inserir novo hóspede");
+        btnInserir.setText("Inserir novo Funcionário");
         btnInserir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInserirActionPerformed(evt);
@@ -143,14 +144,14 @@ public class FormFuncionario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInserirActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        FormAlteracaoFuncionario ff = new FormAlteracaoFuncionario(func);
+        FormAlteracaoFuncionario ff = new FormAlteracaoFuncionario(this, func);
         ff.setVisible(true);
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void jtFuncionarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtFuncionarioMouseClicked
-       int linhaSelecionada = jtFuncionario.getSelectedRow();
-       modelotabelaFunc = (TableModelFuncionario)jtFuncionario.getModel();
-       func = modelotabelaFunc.retornarObjetoSelecionado(linhaSelecionada);
+        int linhaSelecionada = jtFuncionario.getSelectedRow();
+        modelotabelaFunc = (TableModelFuncionario) jtFuncionario.getModel();
+        func = modelotabelaFunc.retornarObjetoSelecionado(linhaSelecionada);
     }//GEN-LAST:event_jtFuncionarioMouseClicked
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
@@ -162,33 +163,33 @@ public class FormFuncionario extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
 
-    private void confirmarExclusao(){
+    private void confirmarExclusao() {
         int confirmacao = JOptionPane.YES_NO_OPTION;
-            JOptionPane.showConfirmDialog (this, "Tem certeza que deseja excluir Funcionário?","WARNING",confirmacao);
-            
-            if(confirmacao == JOptionPane.YES_OPTION) {
-                new FuncionarioDAO().excluir(func.getId());
-                JOptionPane.showMessageDialog(this,"Funcionário excluído com sucesso!");
-               
-            }
-        
+        confirmacao = JOptionPane.showConfirmDialog(this, "Tem certeza que deseja excluir Funcionário?", "WARNING", confirmacao);
+
+        if (confirmacao == JOptionPane.YES_OPTION) {
+            new FuncionarioDAO().excluir(func.getId());
+            JOptionPane.showMessageDialog(this, "Funcionário excluído com sucesso!");
+
+        }
+
     }
-    
-    public void preencherTabelaFuncionario(){
-        modelotabelaFunc = new TableModelFuncionario((ArrayList<Funcionario>) new FuncionarioDAO().listarTodos());
+
+    public void preencherTabelaFuncionario() {
+        modelotabelaFunc = new TableModelFuncionario(new FuncionarioDAO().listarTodos());
         jtFuncionario.setModel(modelotabelaFunc);
-       
+
     }
-    
+
     private void exibirTelaFunc() {
         new FormInsercaoFuncionario(this).setVisible(true);
     }
-    
-    private void instanciarTabelaFuncionario(){
+
+    private void instanciarTabelaFuncionario() {
         modelotabelaFunc = new TableModelFuncionario();
         jtFuncionario.setModel(modelotabelaFunc);
-    }   
-    
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnExcluir;

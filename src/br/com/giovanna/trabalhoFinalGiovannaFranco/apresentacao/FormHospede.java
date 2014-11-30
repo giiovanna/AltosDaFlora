@@ -6,9 +6,10 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class FormHospede extends javax.swing.JFrame {
+
     TableModelHospede modeloTabelaHospede;
     Hospede hospede;
-    
+
     public FormHospede() {
         initComponents();
         instanciarTabelaHospede();
@@ -154,9 +155,9 @@ public class FormHospede extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void jtHospedeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtHospedeMouseClicked
-       int linhaSelecionada = jtHospede.getSelectedRow();
-       modeloTabelaHospede = (TableModelHospede)jtHospede.getModel();
-       hospede = modeloTabelaHospede.retornarObjetoSelecionado(linhaSelecionada);
+        int linhaSelecionada = jtHospede.getSelectedRow();
+        modeloTabelaHospede = (TableModelHospede) jtHospede.getModel();
+        hospede = modeloTabelaHospede.retornarObjetoSelecionado(linhaSelecionada);
     }//GEN-LAST:event_jtHospedeMouseClicked
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
@@ -167,32 +168,33 @@ public class FormHospede extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
 
-    private void confirmarExclusao(){
+    private void confirmarExclusao() {
         int confirmacao = JOptionPane.YES_NO_OPTION;
-            JOptionPane.showConfirmDialog (this, "Tem certeza que deseja excluir hóspede?","WARNING",confirmacao);
-            
-            if(confirmacao == JOptionPane.YES_OPTION) {
-               new HospedeDAO().mudarStatus(0,hospede.getId());
-               JOptionPane.showMessageDialog(this,"Hóspede excluído com sucesso! ");
-               preencherTabelaHospede();
-            }
-        
+        confirmacao = JOptionPane.showConfirmDialog(this, "Tem certeza que deseja excluir hóspede?", "WARNING", confirmacao);
+
+        if (confirmacao == JOptionPane.YES_OPTION) {
+            new HospedeDAO().mudarStatus(0, hospede.getId());
+            JOptionPane.showMessageDialog(this, "Hóspede excluído com sucesso! ");
+            preencherTabelaHospede();
+        }
+
     }
-    
+
     private void exibirTelaHospede() {
+//        new FormAlteracaoHospede(this, hospede).setVisible(true);
         new FormInsercaoHospede(this).setVisible(true);
     }
-    
-    public void preencherTabelaHospede(){
+
+    public void preencherTabelaHospede() {
         modeloTabelaHospede = new TableModelHospede((ArrayList<Hospede>) new HospedeDAO().listarAtivos());
         jtHospede.setModel(modeloTabelaHospede);
     }
-    
-    private void instanciarTabelaHospede(){
+
+    private void instanciarTabelaHospede() {
         modeloTabelaHospede = new TableModelHospede();
         jtHospede.setModel(modeloTabelaHospede);
-    }   
-    
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnExcluir;

@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS `HotelAltosDaFlora`.`Hospede` (
   `dataNascimento` DATE NOT NULL,
   `idContato` INT NOT NULL,
   `idEndereco` INT NOT NULL,
+  `ativo` SMALLINT NOT NULL DEFAULT 1,
   PRIMARY KEY (`idHospede`),
   INDEX `fk_Hospede_Contato_idx` (`idContato` ASC),
   INDEX `fk_Hospede_Endereco1_idx` (`idEndereco` ASC),
@@ -68,7 +69,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `HotelAltosDaFlora`.`Categoria` (
   `idCategoria` INT NOT NULL AUTO_INCREMENT,
   `descricao` VARCHAR(45) NOT NULL,
-  `ativo` SMALLINT NOT NULL,
+  `ativo` SMALLINT NOT NULL DEFAULT 1,
   PRIMARY KEY (`idCategoria`))
 ENGINE = InnoDB;
 
@@ -83,6 +84,7 @@ CREATE TABLE IF NOT EXISTS `HotelAltosDaFlora`.`TipoAcomodacao` (
   `precoDiaria` DECIMAL(10,2) NOT NULL,
   `nroDeAdulto` INT NOT NULL,
   `nroDeCrianca` INT NOT NULL,
+  `ativo` SMALLINT NOT NULL DEFAULT 1,
   PRIMARY KEY (`idtipoAcomodacao`))
 ENGINE = InnoDB;
 
@@ -96,6 +98,7 @@ CREATE TABLE IF NOT EXISTS `HotelAltosDaFlora`.`Acomodacao` (
   `andar` INT NOT NULL,
   `idTipoAcomodacao` INT NOT NULL,
   `disponivel` SMALLINT NOT NULL DEFAULT 1,
+  `ativo` SMALLINT NOT NULL DEFAULT 1,
   PRIMARY KEY (`idacomodacao`),
   INDEX `fk_acomodacao_tipoAcomodacao1_idx` (`idTipoAcomodacao` ASC),
   CONSTRAINT `fk_acomodacao_tipoAcomodacao1`
@@ -115,6 +118,7 @@ CREATE TABLE IF NOT EXISTS `HotelAltosDaFlora`.`Funcionario` (
   `senhaAcesso` VARCHAR(45) NOT NULL,
   `nivelAcesso` SMALLINT NOT NULL,
   `nome` VARCHAR(45) NOT NULL,
+  `ativo` SMALLINT NOT NULL DEFAULT 1,
   PRIMARY KEY (`idFuncionario`),
   UNIQUE INDEX `nomeAcesso_UNIQUE` (`nomeAcesso` ASC))
 ENGINE = InnoDB;
@@ -130,7 +134,7 @@ CREATE TABLE IF NOT EXISTS `HotelAltosDaFlora`.`Entrada` (
   `idAcomodacao` INT NOT NULL,
   `idHospede` INT NOT NULL,
   `idFuncionario` INT NOT NULL,
-  `ativa` SMALLINT NOT NULL DEFAULT 1,
+  `ativo` SMALLINT NOT NULL DEFAULT 1,
   PRIMARY KEY (`idEntrada`),
   INDEX `fk_Entrada_acomodacao1_idx` (`idAcomodacao` ASC),
   INDEX `fk_Entrada_Hospede1_idx` (`idHospede` ASC),
@@ -161,6 +165,7 @@ CREATE TABLE IF NOT EXISTS `HotelAltosDaFlora`.`Consumo` (
   `data` DATE NOT NULL,
   `valor` DECIMAL(10,2) NOT NULL,
   `idEntrada` INT NOT NULL,
+  `ativo` SMALLINT NOT NULL DEFAULT 1,
   PRIMARY KEY (`idconsumo`),
   INDEX `fk_Consumo_Entrada1_idx` (`idEntrada` ASC),
   CONSTRAINT `fk_Consumo_Entrada1`
@@ -208,7 +213,7 @@ CREATE TABLE IF NOT EXISTS `HotelAltosDaFlora`.`Reserva` (
   `idTipoAcomodacao` INT NOT NULL,
   `idHospede` INT NOT NULL,
   `idFuncionario` INT NOT NULL,
-  `ativa` SMALLINT NOT NULL DEFAULT 1,
+  `ativo` SMALLINT NOT NULL DEFAULT 1,
   PRIMARY KEY (`idReserva`),
   INDEX `fk_Reserva_tipoAcomodacao1_idx` (`idTipoAcomodacao` ASC),
   INDEX `fk_Reserva_Hospede1_idx` (`idHospede` ASC),

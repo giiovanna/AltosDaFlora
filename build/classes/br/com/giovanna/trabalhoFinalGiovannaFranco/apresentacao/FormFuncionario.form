@@ -121,7 +121,7 @@
         </Container>
         <Component class="javax.swing.JButton" name="btnInserir">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Inserir novo h&#xf3;spede"/>
+            <Property name="text" type="java.lang.String" value="Inserir novo Funcion&#xe1;rio"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInserirActionPerformed"/>

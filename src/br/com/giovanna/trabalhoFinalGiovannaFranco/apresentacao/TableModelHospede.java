@@ -6,7 +6,7 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 public class TableModelHospede extends AbstractTableModel {
-    private String[] nomeColunas = {"Código", "Nome", "CPF","Data de nascimento"};    
+    private String[] nomeColunas = {"Código", "Nome", "RG","Data de nascimento"};    
     private List<Hospede> hospedesCadastrados;    
     
     public TableModelHospede(){

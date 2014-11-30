@@ -2,17 +2,23 @@ package br.com.giovanna.trabalhoFinalGiovannaFranco.apresentacao;
 
 import br.com.giovanna.trabalhoFinalGiovannaFranco.fabrica.Conexao;
 import java.io.InputStream;
-import java.util.HashMap;
 import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
+import br.com.giovanna.trabalhoFinalGiovannaFranco.modelo.Funcionario;
+import javax.swing.JFrame;
 
 public class FormPrincipal extends javax.swing.JFrame {
+    private final Funcionario funcionarioLogado;
     
-    public FormPrincipal() {
+    public FormPrincipal(Funcionario funcionario) {
         initComponents();
+        
+        maximizarTela();
+        
+        funcionarioLogado = funcionario;
     }
 
     @SuppressWarnings("unchecked")
@@ -40,6 +46,7 @@ public class FormPrincipal extends javax.swing.JFrame {
         jMenu4.setText("jMenu4");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Hotel Altos da Flora");
 
         jMenu1.setText("Cadastros");
 
@@ -181,7 +188,7 @@ public class FormPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiTipoAcomocacaoActionPerformed
 
     private void jmiEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEntradaActionPerformed
-        FormInsercaoEntrada fe = new FormInsercaoEntrada();
+        FormInsercaoEntrada fe = new FormInsercaoEntrada(funcionarioLogado);
         fe.setVisible(true);
     }//GEN-LAST:event_jmiEntradaActionPerformed
 
@@ -196,44 +203,15 @@ public class FormPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiSaidaActionPerformed
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
-        FormInsercaoReserva formR = new FormInsercaoReserva();
+        FormInsercaoReserva formR = new FormInsercaoReserva(funcionarioLogado);
         formR.setVisible(true);
         
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
+
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
         gerarRelatorio();
     }//GEN-LAST:event_jMenuItem10ActionPerformed
-
-    public static void main(String args[]) {
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FormPrincipal().setVisible(true);
-            }
-        });
-    }
     
     public void gerarRelatorio(){
         Conexao con = new Conexao();
@@ -250,7 +228,6 @@ public class FormPrincipal extends javax.swing.JFrame {
             throw new RuntimeException(jre);
         } 
     }
-
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
@@ -271,4 +248,8 @@ public class FormPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiSaida;
     private javax.swing.JMenuItem jmiTipoAcomocacao;
     // End of variables declaration//GEN-END:variables
+
+    private void maximizarTela() {
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+    }
 }

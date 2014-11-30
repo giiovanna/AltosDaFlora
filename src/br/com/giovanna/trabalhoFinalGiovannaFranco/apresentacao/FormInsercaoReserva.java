@@ -1,15 +1,11 @@
 package br.com.giovanna.trabalhoFinalGiovannaFranco.apresentacao;
 
-import br.com.giovanna.trabalhoFinalGiovannaFranco.controle.AcomodacaoDAO;
 import br.com.giovanna.trabalhoFinalGiovannaFranco.controle.AcompanhanteDAO;
-import br.com.giovanna.trabalhoFinalGiovannaFranco.controle.EntradaDAO;
 import br.com.giovanna.trabalhoFinalGiovannaFranco.controle.FuncionarioDAO;
 import br.com.giovanna.trabalhoFinalGiovannaFranco.controle.HospedeDAO;
 import br.com.giovanna.trabalhoFinalGiovannaFranco.controle.ReservaDAO;
 import br.com.giovanna.trabalhoFinalGiovannaFranco.controle.TipoAcomodacaoDAO;
-import br.com.giovanna.trabalhoFinalGiovannaFranco.modelo.Acomodacao;
 import br.com.giovanna.trabalhoFinalGiovannaFranco.modelo.Acompanhante;
-import br.com.giovanna.trabalhoFinalGiovannaFranco.modelo.Entrada;
 import br.com.giovanna.trabalhoFinalGiovannaFranco.modelo.Funcionario;
 import br.com.giovanna.trabalhoFinalGiovannaFranco.modelo.Hospede;
 import br.com.giovanna.trabalhoFinalGiovannaFranco.modelo.Reserva;
@@ -21,17 +17,20 @@ public class FormInsercaoReserva extends javax.swing.JFrame {
     private List<Acompanhante> acompanhantes;
     private int adulto;
     private int crianca;
-    TableModelAcompanhante modeloAcompanhante;
+    private TableModelAcompanhante modeloAcompanhante;
+    private Funcionario funcionarioLogado;
 
-    public FormInsercaoReserva() {
+    public FormInsercaoReserva(Funcionario f) {
         initComponents();
         carregarAcomodacao();
-        carregarFuncionario();
         carregarHospede();
         instanciarTabelaAcompanhante();
         acompanhantes = new ArrayList<>();
         adulto = 1;
         crianca = 0;
+        funcionarioLogado = f;
+        jtfFuncionario.setText(funcionarioLogado.getNome());
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -48,7 +47,6 @@ public class FormInsercaoReserva extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jcbTipoAcomodacao = new javax.swing.JComboBox();
-        jcbFuncionario = new javax.swing.JComboBox();
         jPanel2 = new javax.swing.JPanel();
         jcbHospede = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
@@ -61,6 +59,7 @@ public class FormInsercaoReserva extends javax.swing.JFrame {
         btnCancelar = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jtfTaxaMulta = new javax.swing.JTextField();
+        jtfFuncionario = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -80,8 +79,6 @@ public class FormInsercaoReserva extends javax.swing.JFrame {
         jLabel6.setText("Funcionário:");
 
         jcbTipoAcomodacao.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
-
-        jcbFuncionario.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Informações do hóspede"));
 
@@ -194,31 +191,31 @@ public class FormInsercaoReserva extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel2)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jtfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel3)
-                                        .addComponent(jLabel5)
-                                        .addComponent(jLabel8))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jtfTaxaMulta, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
-                                        .addComponent(jdcDataChegada, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
-                                        .addComponent(jcbTipoAcomodacao, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGap(18, 18, 18)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(jLabel4)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jdcDataSaida, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(jLabel6)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(jcbFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jtfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel8))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jtfTaxaMulta, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
+                                    .addComponent(jdcDataChegada, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
+                                    .addComponent(jcbTipoAcomodacao, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jdcDataSaida, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jtfFuncionario)))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -243,7 +240,7 @@ public class FormInsercaoReserva extends javax.swing.JFrame {
                             .addComponent(jLabel5)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel6)
-                                .addComponent(jcbFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jtfFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(jcbTipoAcomodacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -305,13 +302,12 @@ public class FormInsercaoReserva extends javax.swing.JFrame {
 
         TipoAcomodacao ta = (TipoAcomodacao) jcbTipoAcomodacao.getSelectedItem();
         
-        Funcionario f = (Funcionario) jcbFuncionario.getSelectedItem();
         Hospede h = (Hospede) jcbHospede.getSelectedItem();
 
         r.setDataChegada(jdcDataChegada.getDate());
         r.setDataSaida(jdcDataSaida.getDate());
         r.setTipoAcomodacao(ta);
-        r.setFuncionario(f);
+        r.setFuncionario(funcionarioLogado);
         r.setHospede(h);
         r.setTaxaMulta(Double.parseDouble(jtfTaxaMulta.getText()));
         r.setAcompanhantes(acompanhantes);
@@ -331,17 +327,9 @@ public class FormInsercaoReserva extends javax.swing.JFrame {
         List<TipoAcomodacao> ta = new TipoAcomodacaoDAO().listarTodos();
 
         jcbTipoAcomodacao.removeAllItems();
+        jcbTipoAcomodacao.addItem("Selecione tipo de acomodação");
         for (TipoAcomodacao tipoA : ta) {
             jcbTipoAcomodacao.addItem(tipoA);
-        }
-    }
-
-    private void carregarFuncionario() {
-        List<Funcionario> func = new FuncionarioDAO().listarTodos();
-
-        jcbFuncionario.removeAllItems();
-        for (Funcionario f : func) {
-            jcbFuncionario.addItem(f);
         }
     }
 
@@ -349,6 +337,7 @@ public class FormInsercaoReserva extends javax.swing.JFrame {
         List<Hospede> hospede = new HospedeDAO().listarTodos();
 
         jcbHospede.removeAllItems();
+        jcbHospede.addItem("Selecione hóspede");
         for (Hospede h : hospede) {
             jcbHospede.addItem(h);
         }
@@ -360,7 +349,14 @@ public class FormInsercaoReserva extends javax.swing.JFrame {
     }
 
     private void verificarAcompanhantes(Acompanhante a) {
-        TipoAcomodacao ta = (TipoAcomodacao) jcbTipoAcomodacao.getSelectedItem();
+        TipoAcomodacao ta = null;
+        try{
+            ta = (TipoAcomodacao) jcbTipoAcomodacao.getSelectedItem();
+        
+        }catch(ClassCastException c){
+            c.printStackTrace();
+        }
+        
         int nroAdulto = ta.getNroAdulto();
         int nroCriancas = ta.getNroCrianca();
 
@@ -433,13 +429,13 @@ public class FormInsercaoReserva extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JComboBox jcbFuncionario;
     private javax.swing.JComboBox jcbHospede;
     private javax.swing.JComboBox jcbTipoAcomodacao;
     private com.toedter.calendar.JDateChooser jdcDataChegada;
     private com.toedter.calendar.JDateChooser jdcDataSaida;
     private javax.swing.JTable jtAcompanhante;
     private javax.swing.JTextField jtfCodigo;
+    private javax.swing.JTextField jtfFuncionario;
     private javax.swing.JTextField jtfTaxaMulta;
     // End of variables declaration//GEN-END:variables
 

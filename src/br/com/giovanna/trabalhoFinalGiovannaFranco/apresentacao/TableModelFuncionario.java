@@ -1,7 +1,6 @@
 package br.com.giovanna.trabalhoFinalGiovannaFranco.apresentacao;
 
 import br.com.giovanna.trabalhoFinalGiovannaFranco.modelo.Funcionario;
-import br.com.giovanna.trabalhoFinalGiovannaFranco.modelo.Hospede;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
@@ -14,7 +13,7 @@ public class TableModelFuncionario extends AbstractTableModel {
         funcionariosCadastrados = new ArrayList<>();
     }  
     
-    public TableModelFuncionario(ArrayList<Funcionario> listaFunc){
+    public TableModelFuncionario(List<Funcionario> listaFunc){
         this();
         funcionariosCadastrados.addAll(listaFunc);
     } 

@@ -44,7 +44,7 @@ public class AcomodacaoDAO implements DAO<Acomodacao> {
 
     @Override
     public void alterar(Acomodacao a) {
-        String sql = "UPDATE acomodacao SET nroAcomodacao=?,andar=?,idTipoAcomodacao=? WHERE idAcomodacao=?;";
+        String sql = "UPDATE acomodacao SET nroAcomodacao=?,andar=?,idTipoAcomodacao=?,disponivel =? WHERE idAcomodacao=?;";
 
         try (Connection con = new Conexao().criarConexao();
                 PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -52,7 +52,8 @@ public class AcomodacaoDAO implements DAO<Acomodacao> {
             ps.setInt(1, a.getNumero());
             ps.setInt(2, a.getAndar());
             ps.setInt(3, a.getTipoAcomodacao().getId());
-            ps.setInt(4, a.getId());
+            ps.setBoolean(4, a.isDisponivel());
+            ps.setInt(5, a.getId());
 
             ps.executeUpdate();
 
@@ -63,7 +64,7 @@ public class AcomodacaoDAO implements DAO<Acomodacao> {
 
     @Override
     public void excluir(int id) {
-        String sql = "DELETE FROM acomodacao WHERE idAcomodacao=?;";
+        String sql = "UPDATE acomodacao SET ativo = 0 WHERE idAcomodacao=?;";
 
         try (Connection con = new Conexao().criarConexao();
                 PreparedStatement ps = con.prepareStatement(sql)) {
@@ -78,7 +79,7 @@ public class AcomodacaoDAO implements DAO<Acomodacao> {
     @Override
     public List<Acomodacao> listarTodos() {
         List<Acomodacao> acomodacoes = null;
-        String sql = "SELECT * FROM acomodacao;";
+        String sql = "SELECT * FROM acomodacao WHERE ativo = 1;";
 
         try (Connection con = new Conexao().criarConexao();
                 PreparedStatement ps = con.prepareStatement(sql);
@@ -106,6 +107,35 @@ public class AcomodacaoDAO implements DAO<Acomodacao> {
         return acomodacoes;
     }
 
+     public List<Acomodacao> listarDisponiveis() {
+        List<Acomodacao> acomodacoes = null;
+        String sql = "SELECT * FROM acomodacao WHERE disponivel = 1;";
+
+        try (Connection con = new Conexao().criarConexao();
+                PreparedStatement ps = con.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
+
+            acomodacoes = new ArrayList<>();
+            TipoAcomodacao tipoAcomodacao;
+
+            while (rs.next()) {
+                Acomodacao acomodacao = new Acomodacao();
+
+                acomodacao.setId(rs.getInt("idAcomodacao"));
+                acomodacao.setAndar(rs.getInt("andar"));
+                acomodacao.setNumero(rs.getInt("nroAcomodacao"));
+
+                tipoAcomodacao = new TipoAcomodacaoDAO().buscar(rs.getInt("idTipoAcomodacao"));
+                acomodacao.setTipoAcomodacao(tipoAcomodacao);
+
+                acomodacoes.add(acomodacao);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return acomodacoes;
+    }
     @Override
     public Acomodacao buscar(int id) {
         Acomodacao acomodacao = null;

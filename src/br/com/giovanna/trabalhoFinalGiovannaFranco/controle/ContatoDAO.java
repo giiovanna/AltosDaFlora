@@ -10,7 +10,7 @@ public class ContatoDAO implements DAO<Contato> {
     
     @Override
     public int inserir(Contato c){
-        String sql = "INSERT INTO Contato (telResidencial,telComercial,celular,email)"+
+        String sql = "INSERT INTO contato (telResidencial,telComercial,celular,email)"+
                      "VALUES (?,?,?,?);";
         
         try (Connection con = new Conexao().criarConexao();
@@ -40,7 +40,7 @@ public class ContatoDAO implements DAO<Contato> {
     
     @Override
     public void alterar(Contato c){
-        String sql = "UPDATE Contato SET telResidencial=?,telComercial=?,"
+        String sql = "UPDATE contato SET telResidencial=?,telComercial=?,"
                 + "celular=?,email=? WHERE idContato=?;";
         
         try (Connection con = new Conexao().criarConexao();
@@ -61,7 +61,7 @@ public class ContatoDAO implements DAO<Contato> {
     
     @Override
     public void excluir(int id){
-        String sql = "DELETE FROM Contato WHERE idContato=?;";
+        String sql = "DELETE FROM contato WHERE idContato=?;";
         
         try (Connection con = new Conexao().criarConexao();
                 PreparedStatement ps = con.prepareStatement(sql)) {
@@ -76,7 +76,7 @@ public class ContatoDAO implements DAO<Contato> {
     @Override
     public Contato buscar(int id) {
         Contato contato = null;
-        String sql = "SELECT * FROM Contato WHERE idContato=?;";
+        String sql = "SELECT * FROM contato WHERE idContato=?;";
 
         try (Connection con = new Conexao().criarConexao();
                 PreparedStatement ps = con.prepareStatement(sql)) {
@@ -105,7 +105,7 @@ public class ContatoDAO implements DAO<Contato> {
     @Override
     public List<Contato> listarTodos(){
        List<Contato> contatos = null;
-       String sql = "SELECT * FROM Contato;";
+       String sql = "SELECT * FROM contato;";
        
        try (Connection con = new Conexao().criarConexao();
             PreparedStatement ps = con.prepareStatement(sql);

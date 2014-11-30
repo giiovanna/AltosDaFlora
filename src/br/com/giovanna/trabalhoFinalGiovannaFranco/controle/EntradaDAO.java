@@ -39,6 +39,9 @@ public class EntradaDAO implements DAO<Entrada> {
                     idEntrada = rs.getInt(1);
                 }
             }
+            
+            e.getAcomodacao().setDisponivel(false);
+            new AcomodacaoDAO().alterar(e.getAcomodacao());
 
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
@@ -87,7 +90,7 @@ public class EntradaDAO implements DAO<Entrada> {
 
     @Override
     public void excluir(int id) {
-        String sql = "DELETE FROM entrada WHERE idEntrada=?;";
+        String sql = "UPDATE entrada SET ativo = 0 WHERE idEntrada=?;";
 
         try (Connection con = new Conexao().criarConexao();
                 PreparedStatement ps = con.prepareStatement(sql)) {
@@ -102,7 +105,7 @@ public class EntradaDAO implements DAO<Entrada> {
     @Override
     public List<Entrada> listarTodos() {
         List<Entrada> entradas = null;
-        String sql = "SELECT * FROM entrada;";
+        String sql = "SELECT * FROM entrada WHERE ativo = 1;";
 
         try (Connection con = new Conexao().criarConexao();
                 PreparedStatement ps = con.prepareStatement(sql);

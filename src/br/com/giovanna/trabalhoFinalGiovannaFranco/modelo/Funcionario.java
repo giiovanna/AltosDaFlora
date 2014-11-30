@@ -1,5 +1,9 @@
 package br.com.giovanna.trabalhoFinalGiovannaFranco.modelo;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class Funcionario {
 
     private int id;
@@ -7,7 +11,7 @@ public class Funcionario {
     private String senhaAcesso;
     private String nomeAcesso;
     private int nivelAcesso;
-
+   
     public int getId() {
         return id;
     }
@@ -31,7 +35,7 @@ public class Funcionario {
     public void setSenhaAcesso(String senhaAcesso) {
         this.senhaAcesso = senhaAcesso;
     }
-
+    
     public String getNomeAcesso() {
         return nomeAcesso;
     }

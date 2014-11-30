@@ -6,6 +6,15 @@ public class Acomodacao {
     private int andar;
     private TipoAcomodacao tipoAcomodacao;
     private boolean disponivel;
+    private int ativo;
+
+    public void setAtivo(int ativo) {
+        this.ativo = ativo;
+    }
+
+    public int getAtivo() {
+        return ativo;
+    }
 
     public boolean isDisponivel() {
         return disponivel;
