@@ -179,6 +179,7 @@ public class FormAlteracaoFuncionario extends javax.swing.JFrame {
         jtfNome.setText(funcionario.getNome());
         jtfNomeAcesso.setText(funcionario.getNomeAcesso());
         jpfSenhaAcesso.setText(funcionario.getSenhaAcesso());
+        jsnNivel.setValue(funcionario.getNivelAcesso());
     }
     
     

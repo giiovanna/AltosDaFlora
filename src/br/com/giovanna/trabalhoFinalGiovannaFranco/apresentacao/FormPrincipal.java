@@ -19,6 +19,8 @@ public class FormPrincipal extends javax.swing.JFrame {
         maximizarTela();
         
         funcionarioLogado = funcionario;
+        
+        visibilidadeMenus();
     }
 
     @SuppressWarnings("unchecked")
@@ -29,7 +31,6 @@ public class FormPrincipal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jmiHospede = new javax.swing.JMenuItem();
-        jmiFuncionario = new javax.swing.JMenuItem();
         jmiCategoria = new javax.swing.JMenuItem();
         jmiAcomocacao = new javax.swing.JMenuItem();
         jmiTipoAcomocacao = new javax.swing.JMenuItem();
@@ -42,6 +43,11 @@ public class FormPrincipal extends javax.swing.JFrame {
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
+        jMenuAdministrativo = new javax.swing.JMenu();
+        jmiFuncionario = new javax.swing.JMenuItem();
+        jMenu5 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         jMenu4.setText("jMenu4");
 
@@ -57,14 +63,6 @@ public class FormPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jmiHospede);
-
-        jmiFuncionario.setText("Funcionário");
-        jmiFuncionario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmiFuncionarioActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jmiFuncionario);
 
         jmiCategoria.setText("Categoria de item");
         jmiCategoria.addActionListener(new java.awt.event.ActionListener() {
@@ -151,6 +149,38 @@ public class FormPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu3);
 
+        jMenuAdministrativo.setText("Administrativo");
+
+        jmiFuncionario.setText("Funcionário");
+        jmiFuncionario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiFuncionarioActionPerformed(evt);
+            }
+        });
+        jMenuAdministrativo.add(jmiFuncionario);
+
+        jMenuBar1.add(jMenuAdministrativo);
+
+        jMenu5.setText("Sistema");
+
+        jMenuItem1.setText("Encerrar Sessão");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem1);
+
+        jMenuItem2.setText("Sair do Sistema");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem2);
+
+        jMenuBar1.add(jMenu5);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -223,6 +253,14 @@ public class FormPrincipal extends javax.swing.JFrame {
         InputStream arquivo = getClass().getResourceAsStream("/br/com/giovanna/trabalhoFinalGiovannaFranco/relatorios/ListagemAcomodacoesVazias.jasper");       
         gerarRelatorio(arquivo);
     }//GEN-LAST:event_jMenuItem11ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        encerrarSessao();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        sairDoSistema();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
     
     public void gerarRelatorio(InputStream arquivo){
         Conexao con = new Conexao();
@@ -244,10 +282,14 @@ public class FormPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenuAdministrativo;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JMenuItem jmiAcomocacao;
     private javax.swing.JMenuItem jmiCategoria;
@@ -261,5 +303,24 @@ public class FormPrincipal extends javax.swing.JFrame {
 
     private void maximizarTela() {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+    }
+
+    private void encerrarSessao() {
+        new FormLogin().setVisible(true);
+        this.dispose();
+    }
+
+    private void visibilidadeMenus() {
+        if (funcionarioLogado.getNivelAcesso() != 0) {
+            jMenuAdministrativo.setVisible(false);
+        }
+    }
+
+    private void sairDoSistema() {
+        int resp = JOptionPane.showConfirmDialog(null, "Deseja sair do sistema?", "Sair do Sistema", JOptionPane.YES_NO_OPTION);
+        
+        if (resp == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
     }
 }

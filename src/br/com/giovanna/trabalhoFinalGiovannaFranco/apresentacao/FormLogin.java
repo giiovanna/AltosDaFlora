@@ -10,6 +10,8 @@ public class FormLogin extends javax.swing.JFrame {
         initComponents();
         
         centralizarJanela();
+        
+        getRootPane().setDefaultButton(btnLogin);
     }
 
     @SuppressWarnings("unchecked")
@@ -105,7 +107,7 @@ public class FormLogin extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Metal".equals(info.getName())) {
+                if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }

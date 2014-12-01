@@ -157,6 +157,7 @@ public class FormInsercaoFuncionario extends javax.swing.JFrame {
     private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
         cadastrar();
         ff.preencherTabelaFuncionario();
+        this.dispose();
     }//GEN-LAST:event_btnInserirActionPerformed
     
     private void cadastrar() {

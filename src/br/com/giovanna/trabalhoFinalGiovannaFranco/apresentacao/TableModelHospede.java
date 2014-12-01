@@ -1,6 +1,7 @@
 package br.com.giovanna.trabalhoFinalGiovannaFranco.apresentacao;
 
 import br.com.giovanna.trabalhoFinalGiovannaFranco.modelo.Hospede;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
@@ -52,7 +53,8 @@ public class TableModelHospede extends AbstractTableModel {
             case 2:
                 return hospede.getRg();
             case 3:
-                return hospede.getDataNasc();
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                return sdf.format(hospede.getDataNasc());
             default:
                 throw new UnsupportedOperationException("Operação Sem Suporte");
         }
